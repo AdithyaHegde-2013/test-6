@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maths Exhibition Website</title>
+<style>
+/* ===== General Styles ===== */
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  color: #eee;
+  background: linear-gradient(135deg, #1a1a2e, #2c2c4d, #1e1e3a);
+  background-size: 400% 400%;
+  animation: bgMove 25s ease infinite;
+  overflow-x: hidden;
+}
+nav {
+  background: rgba(0,0,0,0.75);
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 220px;
+  backdrop-filter: blur(12px);
+  border-right: 2px solid rgba(255,255,255,0.2);
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  padding: 12px 15px;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+nav a:hover,
+nav a.active-tab {
+  background: rgba(255,255,255,0.15);
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #00f0ff, 0 0 30px #00f0ff;
+}
+main { margin-left: 240px; padding: 40px; }
+section { display: none; }
+section.active { display: block; }
+/* ===== Cards ===== */
+.card-container { display: flex; flex-direction: column; gap: 25px; max-width: 900px; }
+.card {
+  background: rgba(255,255,255,0.05);
+  padding: 25px 30px;
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgba(0,0,0,0.5);
+  backdrop-filter: blur(12px);
+  width: 100%;
+  transition: 0.3s;
+  cursor: pointer;
+}
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0 25px #ffd700, 0 0 50px #ffd700;
+}
+/* ===== Headings ===== */
+h2, h3 {
+  background: linear-gradient(90deg, #ffdd55, #ff9d00, #ffe577);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textGlow 4s ease infinite;
+  text-align: left;
+}
+/* ===== Buttons & Inputs ===== */
+input { padding: 12px; width: 250px; border-radius: 8px; border: none; outline: none; background: rgba(255,255,255,0.2); color: #fff; margin-right: 10px; }
+button { padding: 12px 20px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; background: linear-gradient(90deg, #ff8800, #ffaa00); background-size: 300% 300%; animation: btnGlow 6s ease infinite; color: #fff; transition: 0.3s; }
+button:hover { transform: scale(1.12); box-shadow: 0 0 20px #ffcc00, 0 0 40px #ffcc00; }
+/* ===== Easter Egg Animations ===== */
+.neon-swirl { animation: neonTwoSpin 10s linear forwards; filter: drop-shadow(0 0 25px #00ffff); }
+.hacked-mode { background:black !important; color:#0f0 !important; font-family: monospace; }
+.glitch { animation: glitchAnim 0.1s infinite; }
+/* ===== Animations ===== */
+@keyframes bgMove {0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+@keyframes textGlow {0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+@keyframes btnGlow {0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+@keyframes neonTwoSpin {0%{transform:rotate(0deg);}50%{transform:rotate(360deg);}100%{transform:rotate(720deg);}}
+@keyframes glitchAnim {0%{transform: translate(0);}25%{transform: translate(-5px,5px);}50%{transform: translate(5px,-5px);}75%{transform: translate(-5px,-5px);}100%{transform: translate(0);}}
+/* Hamburger button */
+#hamburger {
+  display: none;
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  font-size: 30px;
+  cursor: pointer;
+  z-index: 999;
+  color: #fff;
+}
+
+/* Mobile responsive nav */
+@media (max-width: 768px) {
+  #hamburger {
+    display: block;
+  }
+  nav {
+    width: 0;
+    padding: 15px 0;
+    overflow-x: hidden;
+    transition: 0.3s;
+  }
+  nav a {
+    opacity: 0;
+    display: block;
+    padding: 12px 15px;
+  }
+  nav.open {
+    width: 200px;
+    padding: 15px;
+  }
+  nav.open a {
+    opacity: 1;
+    transition: opacity 0.3s ease 0.2s;
+  }
+  main {
+    margin-left: 0;
+    transition: margin-left 0.3s;
+  }
+  main.nav-open {
+    margin-left: 200px;
+  }
+}
+/* Hide hamburger visually when nav is open (extra safety) */
+nav.open ~ #hamburger {
+  visibility: hidden;
+}
+/* Responsive video container */
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 ratio */
+  height: 0;
+  overflow: hidden;
+  border-radius: 15px;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" data-tab="home" class="active-tab">Home</a>
+  <a href="#" data-tab="use">How to Use</a>
+  <a href="#" data-tab="guide">Project Guide</a>
+  <a href="#" data-tab="india">India's Contribution</a>
+  <a href="#" data-tab="integers">All About Integers</a>
+  <a href="#" data-tab="egg">Easter Eggs</a>
+</nav>
+<div id="hamburger" onclick="toggleNav()">☰</div>
+
+
+<main>
+<section id="home" class="active">
+<h2>Welcome to the Maths Exhibition</h2>
+<div class="card-container">
+<div class="card">
+<h3>About This Website</h3>
+<p>This website is your complete guide to our Maths Exhibition! Explore our exhibition projects, learn about integers , and explore cool secrets that we've hidden.</p>
+<p>We’ve created this especially for visitors of all ages — dive in and have fun!</p>
+<p><b>For any queries, contact:</b> Adithya, Sanay, Manas, Malolan</p>
+</div>
+</div>
+</section>
+
+<section id="use">
+<h2>How to Use</h2>
+<div class="card-container">
+<div class="card"><h3>Navigation</h3><p>Click the menu items on the left to switch sections.</p></div>
+<div class="card"><h3>Explore Projects</h3><p>Go to [roject Guide to get a detailed explanation of all our projects.</p></div>
+<div class="card"><h3>All About Integers</h3><p>Learn concepts and fun facts about integers and challenge your understanding of integers through our quiz.</p></div>
+<div class="card"><h3>India's contribution to Integers</h3><p>hello</p></div>
+<div class="card"><h3>Easter Eggs</h3><p>Want surprises? Go to Easter Eggs section and try secret codes to unlock fun effects!</p></div>
+</div>
+</section>
+
+<section id="guide">
+<h2>Project Guide</h2>
+<div class="card-container">
+<div class="card">
+<h3>Upamanyu's Project (Math Video)</h3>
+<p>A quiz</p>
+<div class="video-wrapper">
+  <iframe src="https://www.youtube.com/embed/ZgApIQwWWC8" allowfullscreen></iframe>
+</div>
+</div>
+<div class="card">
+<h3>Shreeram's Project (Logic Puzzle Video)</h3>
+<p>An animation</p>
+<div class="video-wrapper">
+  <iframe src="https://www.youtube.com/embed/ZgApIQwWWC8" allowfullscreen></iframe>
+</div>
+</div>
+</div>
+</section>
+
+<section id="india">
+<h2>India's Contribution</h2>
+<div class="card-container">
+<div class="card"><h3>Zero & Place Value</h3><p>India introduced the concept of zero and place‑value number system — a foundation of modern mathematics.</p></div>
+<div class="card"><h3>Mathematics in Ancient Texts</h3><p>Indian scholars made early advances in arithmetic, algebra, and trigonometry, influencing generations worldwide.</p></div>
+<div class="card"><h3>Vedic Mathematics</h3><p>Traditional computation methods using patterns — quick tricks that make mental math fun and fast.</p></div>
+</div>
+</section>
+
+<section id="integers">
+<h2>All About Integers</h2>
+<div class="card-container">
+<div class="card">
+<h3>What are Integers?</h3>
+<p>Integers are whole numbers — positive, negative, or zero. Examples: -3, -2, -1, 0, 1, 2, 3.</p>
+</div>
+<div class="card">
+<h3>Fun Facts About Integers</h3>
+<ul>
+<li>Zero is neither positive nor negative.</li>
+<li>Negative numbers were first used in ancient mathematics to represent debt or loss.</li>
+<li>Integers show up in daily life — temperature below/above zero, bank credits/debits, altitude below/above sea level.</li>
+<li>Multiplying two negative integers gives a positive result.</li>
+</ul>
+</div>
+<div class="card">
+<h3>Quick Questions</h3>
+<ul>
+<li>What is -5 + 9?</li>
+<li>If you subtract 7 from -3, what do you get?</li>
+<li>Multiply -4 by -6.</li>
+<li>List all integers between -2 and +3.</li>
+</ul>
+</div>
+</div>
+</section>
+
+<section id="egg">
+<h2>Easter Eggs</h2>
+<div class="card-container">
+<p><b>Instructions:</b> Enter one of the secret codes below to unlock various cool secrets. Enter <b>0</b> anytime to reset the page to default.</p>
+<input id="eggInput" type="text" placeholder="Enter code">
+<button onclick="checkEgg()">Unlock</button>
+<p id="eggOutput"></p>
+<div id="eggQuizContainer"></div>
+<audio id="correctSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_7e0b1b7c48.mp3"></audio>
+</div>
+</section>
+
+
+<script>
+// Tab navigation
+const tabs=document.querySelectorAll('nav a');
+const sections=document.querySelectorAll('section');
+tabs.forEach(tab=>{
+  tab.addEventListener('click',e=>{
+    e.preventDefault();
+    const target=tab.getAttribute('data-tab');
+    sections.forEach(sec=>sec.classList.remove('active'));
+    document.getElementById(target).classList.add('active');
+    tabs.forEach(t=>t.classList.remove('active-tab'));
+    tab.classList.add('active-tab');
+  });
+});
+
+// Easter Egg
+function checkEgg(){
+  const code=document.getElementById('eggInput').value.trim();
+  const out=document.getElementById('eggOutput');
+  const quizContainer=document.getElementById('eggQuizContainer');
+  const sound=document.getElementById('correctSound');
+
+  document.body.classList.remove('neon-swirl','glitch','hacked-mode');
+  quizContainer.innerHTML=''; out.innerHTML='';
+
+  switch(code){
+    case '0': location.reload(); break;
+
+    case '101':
+      sound.play(); out.innerHTML='✨ Neon Swirl Activated! Solve this while it spins:';
+      document.body.classList.add('neon-swirl');
+      setTimeout(()=>document.body.classList.remove('neon-swirl'),10000);
+      quizContainer.innerHTML=`<p>Question: What is 7 × 8?</p><input id="neonAns" type="number" placeholder="Answer"><button onclick="checkNeon()">Submit</button><p id="neonResult"></p>`;
+      break;
+
+    case '202':
+      sound.play(); out.innerHTML='💀 Hack Mode Enabled! Solve this while in hack mode:';
+      document.body.classList.add('hacked-mode');
+      quizContainer.innerHTML=`<p>Question: Solve -12 + 20 = ?</p><input id="hackAns" type="number" placeholder="Answer"><button onclick="checkHack()">Submit</button><p id="hackResult"></p>`;
+      break;
+
+    case '404':
+      sound.play(); out.innerHTML='🌀 Glitch Effect! Solve this while glitching:';
+      document.body.classList.add('glitch');
+      quizContainer.innerHTML=`<p>Question: 15 - 27 = ?</p><input id="glitchAns" type="number" placeholder="Answer"><button onclick="checkGlitch()">Submit</button><p id="glitchResult"></p>`;
+      break;
+
+    default: out.innerHTML='❌ Invalid code';
+  }
+}
+
+// Quiz checkers
+function checkNeon(){ const ans=document.getElementById('neonAns').value; document.getElementById('neonResult').innerHTML=(parseInt(ans)===56)?'✅ Correct!':'❌ Try again!';}
+function checkHack(){ const ans=document.getElementById('hackAns').value; document.getElementById('hackResult').innerHTML=(parseInt(ans)===8)?'✅ Correct!':'❌ Try again!';}
+function checkGlitch(){ const ans=document.getElementById('glitchAns').value; document.getElementById('glitchResult').innerHTML=(parseInt(ans)===-12)?'✅ Correct!':'❌ Try again!';}
+function toggleNav() {
+  const nav = document.querySelector('nav');
+  const main = document.querySelector('main');
+  nav.classList.toggle('open');
+  main.classList.toggle('nav-open');
+  
+}
+// Close sidebar when clicking a nav link (mobile)
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    const nav = document.querySelector('nav');
+    const main = document.querySelector('main');
+    if (nav.classList.contains('open')) {
+      nav.classList.remove('open');
+      main.classList.remove('nav-open');
+      document.getElementById('hamburger').style.display = 'block';
+    }
+  });
+});
+// Close sidebar when clicking outside
+document.addEventListener('click', function(e) {
+  const nav = document.querySelector('nav');
+  const hamburger = document.getElementById('hamburger');
+
+  // If sidebar open AND clicked outside nav AND outside hamburger
+  if (nav.classList.contains('open') &&
+      !nav.contains(e.target) &&
+      e.target !== hamburger) {
+
+    nav.classList.remove('open');
+    document.querySelector('main').classList.remove('nav-open');
+    hamburger.style.display = 'block';
+  }
+});
+function toggleNav() {
+  const nav = document.querySelector('nav');
+  const main = document.querySelector('main');
+  const hamburger = document.getElementById('hamburger');
+
+  nav.classList.toggle('open');
+  main.classList.toggle('nav-open');
+
+  // Hide hamburger when sidebar opens
+  hamburger.style.display = nav.classList.contains('open') ? 'none' : 'block';
+}
+
+</script>
+
+</body>
+</html>
