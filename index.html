@@ -91,6 +91,37 @@ button:hover { transform: scale(1.12); box-shadow: 0 0 20px #ffcc00, 0 0 40px #f
 @keyframes btnGlow {0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
 @keyframes neonTwoSpin {0%{transform:rotate(0deg);}50%{transform:rotate(360deg);}100%{transform:rotate(720deg);}}
 @keyframes glitchAnim {0%{transform: translate(0);}25%{transform: translate(-5px,5px);}50%{transform: translate(5px,-5px);}75%{transform: translate(-5px,-5px);}100%{transform: translate(0);}}
+/* ===== Timeline Styling ===== */
+.timeline {
+  position: relative;
+  margin: 40px 0;
+  padding-left: 30px;
+  border-left: 4px solid #ffcc00;
+  animation: fadeIn 1.5s ease;
+}
+
+.timeline-item {
+  margin: 30px 0;
+  position: relative;
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -12px;
+  top: 5px;
+  width: 18px;
+  height: 18px;
+  background: #ffcc00;
+  border-radius: 50%;
+  box-shadow: 0 0 15px #ffcc00;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* Hamburger button */
 #hamburger {
   display: none;
@@ -168,6 +199,8 @@ nav.open ~ #hamburger {
   <a href="#" data-tab="guide">Project Guide</a>
   <a href="#" data-tab="india">India's Contribution</a>
   <a href="#" data-tab="integers">All About Integers</a>
+  <a href="#" data-tab="evolution">Evolution of Integers</a>
+  <a href="#" data-tab="daily">Integers in Daily Life</a>
   <a href="#" data-tab="egg">Easter Eggs</a>
 </nav>
 <div id="hamburger" onclick="toggleNav()">☰</div>
@@ -210,7 +243,7 @@ nav.open ~ #hamburger {
  *the dice wil be rolled three times per one parent<br>
  *two questions of the 6 questions each will be easy , difficult , and extremely difficult<br>
  *if the question is answered appropriately  , badges and stickers will be awarded to the winners<br>
- <b>relive their game here</b>
+ link to their fun game : <a href="https://raghunidtech.github.io/mathmagic/" target="_blank">Fun game</a>
 <br> <b>members:upamanyu , anirudh , abhiram , saket , dheemanth , samartha </b></p>
 
 </div>
@@ -284,6 +317,69 @@ points would be awarded when a hook is scored in all levels and points are also 
 </ul>
 </div>
 </div>
+</section>
+<section id="evolution" class="hidden">
+  <h2>Evolution of Integers</h2>
+  <div class="card-container">
+
+    <div class="card">
+      <h3>Early Counting Systems</h3>
+      <p>Ancient civilizations like the Egyptians, Babylonians, and Sumerians created number symbols but did not use negative numbers yet.</p>
+    </div>
+
+    <div class="card">
+      <h3>India's Breakthrough</h3>
+      <p>Indian mathematicians introduced zero and rules for negative numbers. Brahmagupta (628 CE) formalized integer operations clearly.</p>
+    </div>
+
+    <div class="card">
+      <h3>China’s Negative Numbers</h3>
+      <p>Ancient Chinese used red rods for positive numbers and black rods for negative—one of the earliest recorded uses of negatives.</p>
+    </div>
+
+    <div class="card">
+      <h3>Integers in Modern Mathematics</h3>
+      <p>Integers now power algebra, coordinate systems, programming, banking, cryptography, game design, and scientific calculations.</p>
+    </div>
+
+  </div>
+  
+</section>
+<section id="daily" class="hidden">
+  <h2>Integers in Daily Life</h2>
+  <div class="card-container">
+
+    <div class="card">
+      <h3>Temperature</h3>
+      <p>Weather uses integers:  
+      30°C → hot  
+      -5°C → below freezing.</p>
+    </div>
+
+    <div class="card">
+      <h3>Bank Accounts</h3>
+      <p>Deposits are positive, withdrawals are negative.  
+      Example: +500 (deposit), -200 (spent).</p>
+    </div>
+
+    <div class="card">
+      <h3>Elevation & Depth</h3>
+      <p>Altitude uses integers:  
+      +8848 m → Mount Everest  
+      -430 m → Dead Sea</p>
+    </div>
+
+    <div class="card">
+      <h3>Games & Sports</h3>
+      <p>Health points, scores, penalties, damage, levels—all use integers.</p>
+    </div>
+
+    <div class="card">
+      <h3>Electric Charges</h3>
+      <p>Atoms have positive (+) and negative (–) charges—an integer-based system.</p>
+    </div>
+
+  </div>
 </section>
 
 <section id="egg">
@@ -410,21 +506,3 @@ function toggleNav() {
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
