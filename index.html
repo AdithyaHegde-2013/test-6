@@ -223,7 +223,7 @@ nav.open ~ #hamburger {
 <h2>How to Use</h2>
 <div class="card-container">
 <div class="card"><h3>Navigation</h3><p>Click the menu items on the left to switch sections.</p></div>
-<div class="card"><h3>Explore Projects</h3><p>Go to [roject Guide to get a detailed explanation of all our projects.</p></div>
+<div class="card"><h3>Explore Projects</h3><p>Go to Project Guide to get a detailed explanation of all our projects.</p></div>
 <div class="card"><h3>All About Integers</h3><p>Learn concepts and fun facts about integers and challenge your understanding of integers through our quiz.</p></div>
 <div class="card"><h3>India's contribution to Integers</h3><p>Learn about how india has contributed integers</p></div>
 <div class="card"><h3>Easter Eggs</h3><p>Want surprises? Go to Easter Eggs section and try secret codes to unlock fun effects!</p></div>
@@ -440,9 +440,11 @@ function checkEgg(){
       sound.play(); out.innerHTML='🌀 Glitch Effect! Solve this while glitching:';
       document.body.classList.add('glitch');
       quizContainer.innerHTML=`<p>Question: 15 - 27 = ?</p><input id="glitchAns" type="number" placeholder="Answer"><button onclick="checkGlitch()">Submit</button><p id="glitchResult"></p>`;
+      setTimeout(()=>document.body.classList.remove('glitch'),7000);
       break;
 
     default: out.innerHTML='❌ Invalid code';
+    
   }
 }
 
@@ -506,4 +508,5 @@ function toggleNav() {
 
 </body>
 </html>
+
 
