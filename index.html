@@ -3,195 +3,642 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>7C Maths Exhibition Website</title>
 
 <style>
-/* ===== Theme & base ===== */
-:root{
-  --bg1:#0f1226;
-  --bg2:#1a1f3b;
-  --glass:rgba(255,255,255,0.08);
-  --glass-strong:rgba(255,255,255,0.14);
-  --text:#e9eef9;
-  --accent:#ffd166;
-  --accent-2:#00f5d4;
-  --accent-3:#ffa62b;
-  --shadow:0 10px 30px rgba(0,0,0,0.35);
+/* ===== Enhanced Theme & Base ===== */
+:root {
+  --bg1: #0a0e1a;
+  --bg2: #14182e;
+  --bg3: #1e2448;
+  --glass: rgba(255, 255, 255, 0.08);
+  --glass-strong: rgba(255, 255, 255, 0.14);
+  --text: #e9eef9;
+  --accent: #ffd166;
+  --accent-2: #00f5d4;
+  --accent-3: #ff6b6b;
+  --accent-4: #9d4edd;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  --glow: 0 0 20px rgba(255, 209, 102, 0.4);
+  --neon-glow: 0 0 30px rgba(0, 245, 212, 0.6);
 }
 
-*{box-sizing:border-box}
-html,body{height:100%}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; overflow-x: hidden; }
 
 body {
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Poppins", sans-serif;
-  margin: 0;
+  font-family: 'Segoe UI', system-ui, -apple-system, Roboto, 'Poppins', sans-serif;
   color: var(--text);
-  background: radial-gradient(1200px 600px at 20% 30%, #142042 0%, #0f1328 40%, #0b0e1e 100%),
-              linear-gradient(135deg, var(--bg1), var(--bg2));
-  background-blend-mode: overlay;
-  overflow-x: hidden;
+  background: 
+    radial-gradient(ellipse at 20% 30%, rgba(20, 32, 66, 0.9) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(30, 36, 84, 0.7) 0%, transparent 50%),
+    linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 40%, var(--bg3) 100%);
+  position: relative;
+  transition: all 0.5s ease;
 }
 
-/* ===== Layout ===== */
+/* Animated background particles */
+.particle {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ===== Enhanced Navigation ===== */
 nav {
-  position: fixed; top: 0; left: 0;
-  height: 100%; width: 240px;
-  display: flex; flex-direction: column; gap: 10px;
-  padding: 20px;
-  background: linear-gradient(180deg, rgba(10,12,24,0.9), rgba(10,12,24,0.75));
-  backdrop-filter: blur(12px);
-  border-right: 1px solid rgba(255,255,255,0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 25px 20px;
+  background: linear-gradient(180deg, rgba(10, 12, 28, 0.95), rgba(10, 12, 28, 0.85));
+  backdrop-filter: blur(15px);
+  border-right: 1px solid rgba(255, 255, 255, 0.15);
   box-shadow: var(--shadow);
   z-index: 10;
+  overflow-y: auto;
+  transform: translateX(0);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 nav h1 {
-  font-size: 18px; font-weight: 700; margin: 0 0 12px 0;
-  letter-spacing: 0.4px;
-  color: #cfe6ff;
+  font-size: 22px;
+  font-weight: 800;
+  margin: 0 0 25px 0;
+  letter-spacing: 0.5px;
+  background: linear-gradient(90deg, #ffd166, #ffb703, #ff9e00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 nav a {
   color: var(--text);
   text-decoration: none;
-  padding: 12px 14px;
-  border-radius: 10px;
+  padding: 14px 16px;
+  border-radius: 12px;
   font-weight: 600;
-  transition: 0.25s ease;
-  display: block;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   background: transparent;
   border: 1px solid transparent;
+  position: relative;
+  overflow: hidden;
 }
-nav a:hover { 
-  background: var(--glass); 
-  border-color: rgba(255,255,255,0.12);
-  transform: translateX(4px);
+
+nav a::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, rgba(255, 209, 102, 0.1), transparent);
+  transition: width 0.3s ease;
 }
+
+nav a:hover::before {
+  width: 100%;
+}
+
+nav a:hover {
+  background: var(--glass);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateX(6px);
+  box-shadow: var(--glow);
+}
+
 nav a.active-tab {
   background: var(--glass-strong);
-  border-color: rgba(255,255,255,0.18);
-  box-shadow: 0 0 0 2px rgba(255, 209, 102, 0.25) inset;
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 0 2px rgba(255, 209, 102, 0.3) inset, var(--glow);
 }
 
-main { margin-left: 260px; padding: 40px 28px; }
-section { display: none; }
-section.active { display: block; }
+nav a i {
+  font-style: normal;
+  font-size: 18px;
+}
 
-/* ===== Section titles ===== */
+/* ===== Main Content ===== */
+main {
+  margin-left: 280px;
+  padding: 40px 30px;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+  transition: margin-left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+section {
+  display: none;
+  animation: fadeIn 0.5s ease;
+}
+
+section.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Enhanced Section Titles ===== */
 h2 {
-  font-size: 32px; margin: 0 0 18px;
-  background: linear-gradient(90deg, #ffe39c, #ffd166, #ffb703);
+  font-size: 36px;
+  margin: 0 0 25px;
+  background: linear-gradient(90deg, #ffd166, #ffb703, #ff9e00);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  position: relative;
+  display: inline-block;
 }
-h3 { margin: 0 0 10px; color: #eaf5ff; }
 
-/* ===== Cards ===== */
-.card-container { display: grid; grid-template-columns: 1fr; gap: 22px; max-width: 1000px; }
-.card {
-  background: var(--glass);
-  border: 1px solid rgba(255,255,255,0.12);
-  padding: 22px 24px;
-  border-radius: 16px;
-  box-shadow: var(--shadow);
-  transition: 0.25s ease;
-}
-.card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.18); }
-
-/* ===== Buttons & inputs ===== */
-input { 
-  padding: 12px 14px; width: 260px; 
-  border-radius: 10px; border: 1px solid rgba(255,255,255,0.16);
-  outline: none; background: rgba(255,255,255,0.12); color: #fff; 
-}
-input::placeholder{color:#cbd5e1}
-button {
-  padding: 12px 18px; border: none; border-radius: 10px; font-weight: 700;
-  cursor: pointer; color: #12131f;
+h2::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 80px;
+  height: 4px;
   background: linear-gradient(90deg, #ffd166, #ffb703);
-  transition: 0.25s ease;
+  border-radius: 2px;
 }
-button:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(255, 183, 3, 0.25); }
 
-/* ===== Media & images ===== */
+h3 {
+  margin: 0 0 15px;
+  color: #eaf5ff;
+  font-size: 22px;
+  position: relative;
+  padding-left: 15px;
+}
+
+h3::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 70%;
+  width: 4px;
+  background: linear-gradient(to bottom, #00f5d4, #9d4edd);
+  border-radius: 2px;
+}
+
+/* ===== Enhanced Cards ===== */
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 25px;
+  max-width: 1200px;
+}
+
+.card {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.03));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 25px;
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #ffd166, #00f5d4, #9d4edd);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), var(--glow);
+}
+
+.card p, .card ul {
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.card ul {
+  padding-left: 20px;
+}
+
+.card li {
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.card li::before {
+  content: '✦';
+  position: absolute;
+  left: -18px;
+  color: #ffd166;
+}
+
+/* ===== Enhanced Buttons & Inputs ===== */
+input {
+  padding: 14px 16px;
+  width: 100%;
+  max-width: 300px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  outline: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  margin-bottom: 15px;
+}
+
+input:focus {
+  border-color: #ffd166;
+  box-shadow: 0 0 0 3px rgba(255, 209, 102, 0.2);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+input::placeholder {
+  color: #a0aec0;
+}
+
+button {
+  padding: 14px 24px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  color: #12131f;
+  background: linear-gradient(90deg, #ffd166, #ffb703);
+  transition: all 0.3s ease;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.7s ease;
+  z-index: -1;
+}
+
+button:hover::before {
+  left: 100%;
+}
+
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(255, 183, 3, 0.4);
+}
+
+/* ===== Enhanced Media & Images ===== */
 .media {
   position: relative;
   width: 100%;
   border-radius: 14px;
   overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.12);
-  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  margin-bottom: 15px;
+  transition: transform 0.4s ease;
 }
+
+.media:hover {
+  transform: scale(1.02);
+}
+
 .media img, .media iframe {
-  width: 100%; height: auto; display: block; border: 0;
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 0;
 }
+
 .caption {
-  font-size: 13px; color: #cfe6ff; margin-top: 8px;
-  opacity: 0.9;
+  font-size: 14px;
+  color: #cfe6ff;
+  margin-top: 8px;
+  opacity: 0.8;
+  font-style: italic;
+  text-align: center;
 }
 
-/* ===== Fun effect classes ===== */
-.neon-swirl { animation: neonTwoSpin 10s linear forwards; filter: drop-shadow(0 0 18px #00f5d4); }
-.hacked-mode { background: #000 !important; color: #17ff00 !important; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
-.glitch { animation: glitchAnim 90ms infinite; }
-.matrix-rain { background-image: repeating-linear-gradient(0deg, rgba(0,255,0,0.04) 0 2px, transparent 2px 4px); }
+/* ===== Super Enhanced Easter Egg Effects ===== */
+.neon-swirl {
+  animation: neonSwirl 8s linear infinite;
+  position: relative;
+}
+
+.neon-swirl::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, 
+    transparent 30%, 
+    rgba(0, 245, 212, 0.1) 50%, 
+    transparent 70%);
+  z-index: -1;
+  animation: shine 3s linear infinite;
+}
+
+.hacked-mode {
+  background: #000 !important;
+  color: #0f0 !important;
+  font-family: 'Courier New', monospace !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.hacked-mode::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 255, 0, 0.03) 0px,
+    rgba(0, 255, 0, 0.03) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  z-index: -1;
+}
+
+.glitch {
+  position: relative;
+  animation: glitchAnim 0.3s infinite;
+}
+
+.matrix-rain {
+  position: relative;
+  overflow: hidden;
+}
+
+.matrix-rain::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(transparent 95%, rgba(0, 255, 0, 0.1) 100%),
+    linear-gradient(90deg, rgba(0, 255, 0, 0.1) 1px, transparent 1px);
+  background-size: 100% 10px, 10px 100%;
+  animation: matrixFlow 20s linear infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
 .flash {
-  animation: flashAnim 1s ease 4;
+  animation: flashAnim 0.5s ease 3;
 }
 
-/* ===== Keyframes ===== */
-@keyframes neonTwoSpin {0%{transform:rotate(0deg)}50%{transform:rotate(360deg)}100%{transform:rotate(720deg)}}
-@keyframes glitchAnim {0%{transform:translate(0)}25%{transform:translate(-4px,3px)}50%{transform:translate(4px,-3px)}75%{transform:translate(-4px,-3px)}100%{transform:translate(0)}}
-@keyframes flashAnim {0%{filter:brightness(1)}50%{filter:brightness(1.6)}100%{filter:brightness(1)}}
-
-/* ===== Timeline (kept for future use) ===== */
-.timeline { position: relative; margin: 24px 0; padding-left: 26px; border-left: 3px solid var(--accent); }
-.timeline-item { margin: 20px 0; position: relative; }
-.timeline-item::before {
-  content:""; position:absolute; left:-11px; top:0; width:16px; height:16px; background: var(--accent); border-radius: 50%;
+.rainbow-mode {
+  background: linear-gradient(45deg, 
+    #ff6b6b, #ffd166, #00f5d4, #9d4edd, #ff6b6b) !important;
+  background-size: 400% 400% !important;
+  animation: rainbowFlow 8s ease infinite !important;
 }
 
-/* ===== Hamburger for mobile ===== */
-#hamburger {
-  display: none; position: fixed; top: 14px; left: 14px;
-  font-size: 28px; cursor: pointer; z-index: 999; color: #fff;
-  background: rgba(255,255,255,0.1); padding: 6px 10px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.15);
+.cyberpunk-mode {
+  background: linear-gradient(135deg, #0a0a0a, #1a0033) !important;
+  color: #ff00ff !important;
+  text-shadow: 0 0 10px #ff00ff !important;
 }
 
-/* ===== Responsive ===== */
-@media (max-width: 900px) {
-  main { padding: 28px 18px; }
+.cyberpunk-mode * {
+  border-color: #ff00ff !important;
 }
-@media (max-width: 768px) {
-  #hamburger { display: block; }
-  nav {
-    width: 0; padding: 20px 0; overflow: hidden; transition: 0.3s ease;
+
+.cyberpunk-mode .card {
+  box-shadow: 0 0 20px rgba(255, 0, 255, 0.3) !important;
+}
+
+/* ===== Enhanced Keyframes ===== */
+@keyframes neonSwirl {
+  0% { 
+    filter: hue-rotate(0deg) drop-shadow(0 0 20px #00f5d4);
   }
-  nav.open { width: 220px; padding: 20px; }
-  nav.open a { opacity: 1; transition: opacity 0.3s ease 0.2s; }
-  main { margin-left: 0; transition: margin-left 0.3s; }
-  main.nav-open { margin-left: 220px; }
+  100% { 
+    filter: hue-rotate(360deg) drop-shadow(0 0 30px #00f5d4);
+  }
 }
-nav.open ~ #hamburger { visibility: hidden; }
+
+@keyframes glitchAnim {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+@keyframes flashAnim {
+  0% { filter: brightness(1); }
+  50% { filter: brightness(2); }
+  100% { filter: brightness(1); }
+}
+
+@keyframes matrixFlow {
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 0 1000px, 1000px 0; }
+}
+
+@keyframes rainbowFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes shine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ===== Easter Egg Unlock Notification ===== */
+.unlock-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(90deg, #ff6b6b, #ffd166, #00f5d4);
+  color: #12131f;
+  padding: 15px 25px;
+  border-radius: 12px;
+  font-weight: 800;
+  z-index: 1000;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transform: translateX(150%);
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.unlock-notification.show {
+  transform: translateX(0);
+}
+
+/* ===== Enhanced Easter Egg Container ===== */
+.easter-egg-content {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  padding: 25px;
+  margin-top: 20px;
+  box-shadow: var(--glow);
+  animation: float 3s ease-in-out infinite;
+}
+
+.easter-egg-content h3 {
+  color: #ffd166;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+/* ===== Hamburger for Mobile ===== */
+#hamburger {
+  display: none;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  font-size: 28px;
+  cursor: pointer;
+  z-index: 999;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+#hamburger:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.1);
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 1100px) {
+  .card-container {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  main {
+    padding: 30px 20px;
+  }
+  h2 {
+    font-size: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  #hamburger {
+    display: block;
+  }
+  
+  nav {
+    width: 280px;
+    transform: translateX(-100%);
+  }
+  
+  nav.open {
+    transform: translateX(0);
+  }
+  
+  main {
+    margin-left: 0;
+    transition: margin-left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  main.nav-open {
+    margin-left: 280px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-container {
+    grid-template-columns: 1fr;
+  }
+  
+  h2 {
+    font-size: 26px;
+  }
+  
+  .unlock-notification {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    text-align: center;
+  }
+}
 </style>
 </head>
 <body>
 
 <nav>
   <h1>7C Maths Exhibition</h1>
-  <a href="#" data-tab="home" class="active-tab">Home</a>
-  <a href="#" data-tab="use">How to Use</a>
-  <a href="#" data-tab="guide">Project Guide</a>
-  <a href="#" data-tab="india">India's Contribution</a>
-  <a href="#" data-tab="integers">All About Integers</a>
-  <a href="#" data-tab="evolution">Evolution of Integers</a>
-  <a href="#" data-tab="daily">Integers in Daily Life</a>
-  <a href="#" data-tab="egg">Easter Eggs</a>
+  <a href="#" data-tab="home" class="active-tab"><i>🏠</i> Home</a>
+  <a href="#" data-tab="use"><i>📱</i> How to Use</a>
+  <a href="#" data-tab="guide"><i>📋</i> Project Guide</a>
+  <a href="#" data-tab="india"><i>🇮🇳</i> India's Contribution</a>
+  <a href="#" data-tab="integers"><i>🔢</i> All About Integers</a>
+  <a href="#" data-tab="evolution"><i>📜</i> Evolution of Integers</a>
+  <a href="#" data-tab="daily"><i>🌍</i> Integers in Daily Life</a>
+  <a href="#" data-tab="egg"><i>🥚</i> Easter Eggs</a>
 </nav>
+
 <div id="hamburger" onclick="toggleNav()">☰</div>
 
 <main>
+<!-- Sections remain the same as original, but with improved styling -->
 <section id="home" class="active">
   <h2>Welcome to the Maths Exhibition</h2>
   <div class="card-container">
@@ -200,6 +647,7 @@ nav.open ~ #hamburger { visibility: hidden; }
       <p>This website is your complete guide to our Maths Exhibition! Explore our projects, learn about integers, and discover the secret codes hidden across the site.</p>
       <p>We built this for visitors of all ages — dive in and have fun!</p>
       <p><b>Contacts:</b> Adithya, Sanay, Manas, Malolan</p>
+      <p><b>Pro Tip:</b> Check the Easter Eggs section for hidden surprises and effects!</p>
     </div>
   </div>
 </section>
@@ -210,8 +658,8 @@ nav.open ~ #hamburger { visibility: hidden; }
     <div class="card"><h3>Navigation</h3><p>Use the menu on the left to switch sections. On mobile, tap the ☰ button.</p></div>
     <div class="card"><h3>Explore Projects</h3><p>Open Project Guide for all team showcases, videos, and explanations.</p></div>
     <div class="card"><h3>All About Integers</h3><p>Learn concepts, facts, and test yourself with quick questions.</p></div>
-    <div class="card"><h3>India’s Contributions</h3><p>Discover India’s breakthroughs like zero and rules for operations.</p></div>
-    <div class="card"><h3>Easter Eggs</h3><p>Enter secret codes to unlock effects and mini integer challenges.</p></div>
+    <div class="card"><h3>India's Contributions</h3><p>Discover India's breakthroughs like zero and rules for operations.</p></div>
+    <div class="card"><h3>Easter Eggs</h3><p>Enter secret codes to unlock amazing effects and mini integer challenges.</p></div>
   </div>
 </section>
 
@@ -315,7 +763,7 @@ nav.open ~ #hamburger { visibility: hidden; }
   <div class="card-container">
     <div class="card">
       <h3>Early Counting Systems</h3>
-      <p>Egyptians, Babylonians, and Sumerians had rich numeral systems, though negatives weren’t yet used.</p>
+      <p>Egyptians, Babylonians, and Sumerians had rich numeral systems, though negatives weren't yet used.</p>
       <div class="media">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Maya.svg/640px-Maya.svg.png" alt="Mayan numerals chart showing base-20 structure">
       </div>
@@ -323,16 +771,16 @@ nav.open ~ #hamburger { visibility: hidden; }
     </div>
 
     <div class="card">
-      <h3>India’s Breakthrough</h3>
+      <h3>India's Breakthrough</h3>
       <p>Indian mathematicians introduced zero and rules for operations with negatives; Brahmagupta (circa 628 CE) formalized them.</p>
       <div class="media">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Brahmagupta.jpg/512px-Brahmagupta.jpg" alt="Portrait or manuscript depiction of Brahmagupta">
       </div>
-      <div class="caption">Brahmagupta’s work clarified integer operations.</div>
+      <div class="caption">Brahmagupta's work clarified integer operations.</div>
     </div>
 
     <div class="card">
-      <h3>China’s Negative Numbers</h3>
+      <h3>China's Negative Numbers</h3>
       <p>Ancient Chinese used counting rods: red for positive, black for negative — early evidence of negative numbers.</p>
       <div class="media">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Suanpan4.jpg/640px-Suanpan4.jpg" alt="Traditional Chinese counting device linked to rod calculus">
@@ -398,132 +846,463 @@ nav.open ~ #hamburger { visibility: hidden; }
 </section>
 
 <section id="egg">
-  <h2>Easter Eggs</h2>
+  <h2>Easter Eggs 🥚</h2>
   <div class="card-container">
     <div class="card">
-      <p><b>Instructions:</b> Enter a secret code to unlock effects and mini integer challenges. Enter 0 to reset.</p>
-      <input id="eggInput" type="text" placeholder="Enter code">
-      <button onclick="checkEgg()">Unlock</button>
-      <p id="eggOutput"></p>
+      <p><b>Welcome to the Secret Easter Egg Zone!</b> Enter a code below to unlock amazing visual effects and mini integer challenges.</p>
+      <p>Try these codes: <span style="color:#ffd166">101</span>, <span style="color:#00f5d4">202</span>, <span style="color:#ff6b6b">303</span>, <span style="color:#9d4edd">404</span>, <span style="color:#ff9e00">505</span>, <span style="color:#0f0">606</span>, <span style="color:#ff00ff">707</span>, <span style="color:#00ffff">808</span>, <span style="color:#ffff00">909</span></p>
+      <p>Enter <span style="color:#ff0000">0</span> to reset all effects.</p>
+      
+      <div style="margin: 20px 0;">
+        <input id="eggInput" type="text" placeholder="Enter secret code here...">
+        <button onclick="checkEgg()">Unlock Effect 🚀</button>
+      </div>
+      
+      <p id="eggOutput" style="font-weight: bold; min-height: 30px;"></p>
+      
       <div id="eggQuizContainer"></div>
-      <audio id="correctSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_7e0b1b7c48.mp3"></audio>
+      
+      <div id="unlockCounter" style="margin-top: 20px; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 10px;">
+        <p>Easter Eggs Unlocked: <span id="eggCount">0</span>/9</p>
+        <div id="eggProgress" style="height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; margin-top: 5px;">
+          <div id="eggProgressBar" style="height: 100%; width: 0%; background: linear-gradient(90deg, #ff6b6b, #ffd166, #00f5d4); border-radius: 4px; transition: width 0.5s ease;"></div>
+        </div>
+      </div>
+      
+      <audio id="correctSound" src="https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3"></audio>
+      <audio id="unlockSound" src="https://assets.mixkit.co/sfx/preview/mixkit-unlock-game-notification-253.mp3"></audio>
     </div>
   </div>
 </section>
 </main>
 
 <script>
+// Create background particles
+function createParticles() {
+  const particleCount = 30;
+  for (let i = 0; i < particleCount; i++) {
+    const particle = document.createElement('div');
+    particle.classList.add('particle');
+    particle.style.width = Math.random() * 4 + 1 + 'px';
+    particle.style.height = particle.style.width;
+    particle.style.left = Math.random() * 100 + '%';
+    particle.style.top = Math.random() * 100 + '%';
+    particle.style.animation = `float ${Math.random() * 10 + 10}s ease-in-out infinite`;
+    particle.style.animationDelay = Math.random() * 5 + 's';
+    particle.style.opacity = Math.random() * 0.4 + 0.1;
+    document.body.appendChild(particle);
+  }
+}
+
 // Tab navigation
 const tabs = document.querySelectorAll('nav a');
 const sections = document.querySelectorAll('section');
-tabs.forEach(tab=>{
-  tab.addEventListener('click', e=>{
+tabs.forEach(tab => {
+  tab.addEventListener('click', e => {
     e.preventDefault();
     const target = tab.getAttribute('data-tab');
-    sections.forEach(sec=>sec.classList.remove('active'));
+    sections.forEach(sec => sec.classList.remove('active'));
     document.getElementById(target).classList.add('active');
-    tabs.forEach(t=>t.classList.remove('active-tab'));
+    tabs.forEach(t => t.classList.remove('active-tab'));
     tab.classList.add('active-tab');
-    // close nav if mobile
+    
+    // Close nav if mobile
     const nav = document.querySelector('nav');
     const main = document.querySelector('main');
-    const hamburger = document.getElementById('hamburger');
     if (nav.classList.contains('open')) {
       nav.classList.remove('open');
       main.classList.remove('nav-open');
-      hamburger.style.display = 'block';
+      document.getElementById('hamburger').style.display = 'block';
     }
   });
 });
 
-// Easter Egg logic: more codes, more effects
-function checkEgg(){
+// Easter Egg System
+let unlockedEggs = new Set();
+let eggCount = 0;
+
+function showUnlockNotification(message, icon) {
+  const notification = document.createElement('div');
+  notification.className = 'unlock-notification';
+  notification.innerHTML = `<span>${icon}</span> ${message}`;
+  document.body.appendChild(notification);
+  
+  setTimeout(() => notification.classList.add('show'), 10);
+  
+  setTimeout(() => {
+    notification.classList.remove('show');
+    setTimeout(() => notification.remove(), 500);
+  }, 3000);
+}
+
+function updateEggCounter() {
+  document.getElementById('eggCount').textContent = eggCount;
+  document.getElementById('eggProgressBar').style.width = `${(eggCount / 9) * 100}%`;
+}
+
+// Enhanced Easter Egg logic
+function checkEgg() {
   const code = document.getElementById('eggInput').value.trim();
   const out = document.getElementById('eggOutput');
   const quizContainer = document.getElementById('eggQuizContainer');
   const sound = document.getElementById('correctSound');
-
-  document.body.classList.remove('neon-swirl','glitch','hacked-mode','matrix-rain','flash');
-  quizContainer.innerHTML=''; out.innerHTML='';
-
-  switch(code){
-    case '0':
+  const unlockSound = document.getElementById('unlockSound');
+  
+  // Remove all previous effects
+  document.body.classList.remove(
+    'neon-swirl', 'glitch', 'hacked-mode', 'matrix-rain', 
+    'flash', 'rainbow-mode', 'cyberpunk-mode'
+  );
+  quizContainer.innerHTML = '';
+  out.innerHTML = '';
+  
+  // Easter egg effects
+  switch(code) {
+    case '0': // Reset
       location.reload();
       break;
-
-    case '101': // Neon swirl
-      sound.play(); out.innerHTML='✨ Neon Swirl Activated!';
+      
+    case '101': // Neon swirl with math challenge
+      unlockSound.play();
+      showUnlockNotification('✨ Neon Swirl Activated!', '✨');
       document.body.classList.add('neon-swirl');
-      setTimeout(()=>document.body.classList.remove('neon-swirl'),10000);
-      quizContainer.innerHTML=`<p>Question: What is 7 × 8?</p>
-        <input id="neonAns" type="number" placeholder="Answer">
-        <button onclick="checkNeon()">Submit</button>
-        <p id="neonResult"></p>`;
+      out.innerHTML = '<span style="color:#00f5d4">✨ Neon Swirl Effect Activated! The entire page is now glowing!</span>';
+      
+      quizContainer.innerHTML = `
+        <div class="easter-egg-content">
+          <h3>Neon Math Challenge</h3>
+          <p>What is 7 × 8?</p>
+          <input id="neonAns" type="number" placeholder="Your answer">
+          <button onclick="checkNeon()">Submit Answer</button>
+          <p id="neonResult" style="margin-top:10px;"></p>
+        </div>
+      `;
+      
+      if (!unlockedEggs.has('101')) {
+        unlockedEggs.add('101');
+        eggCount++;
+        updateEggCounter();
+      }
       break;
-
+      
     case '202': // Hack mode
-      sound.play(); out.innerHTML='💀 Hack Mode Enabled!';
+      unlockSound.play();
+      showUnlockNotification('💀 Hack Mode Enabled!', '💀');
       document.body.classList.add('hacked-mode');
-      quizContainer.innerHTML=`<p>Question: Solve -12 + 20</p>
-        <input id="hackAns" type="number" placeholder="Answer">
-        <button onclick="checkHack()">Submit</button>
-        <p id="hackResult"></p>`;
+      out.innerHTML = '<span style="color:#0f0">💀 SYSTEM HACKED! Entering terminal mode...</span>';
+      
+      quizContainer.innerHTML = `
+        <div class="easter-egg-content" style="background:rgba(0,0,0,0.7); border-color:#0f0;">
+          <h3 style="color:#0f0">> SYSTEM CHALLENGE</h3>
+          <p>> Solve: -12 + 20</p>
+          <input id="hackAns" type="number" placeholder="> Input solution" style="background:rgba(0,255,0,0.1); border-color:#0f0;">
+          <button onclick="checkHack()" style="background:#0f0; color:#000;">> EXECUTE</button>
+          <p id="hackResult" style="margin-top:10px;"></p>
+        </div>
+      `;
+      
+      if (!unlockedEggs.has('202')) {
+        unlockedEggs.add('202');
+        eggCount++;
+        updateEggCounter();
+      }
       break;
-
-    case '404': // Glitch
-      sound.play(); out.innerHTML='🌀 Glitch Effect!';
-      document.body.classList.add('glitch');
-      quizContainer.innerHTML=`<p>Question: 15 - 27</p>
-        <input id="glitchAns" type="number" placeholder="Answer">
-        <button onclick="checkGlitch()">Submit</button>
-        <p id="glitchResult"></p>`;
-      setTimeout(()=>document.body.classList.remove('glitch'),7000);
-      break;
-
-    case '303': // Matrix rain overlay + quick sum
-      sound.play(); out.innerHTML='🧪 Matrix Rain!';
+      
+    case '303': // Matrix rain
+      unlockSound.play();
+      showUnlockNotification('🧪 Matrix Rain Activated!', '🧪');
       document.body.classList.add('matrix-rain');
-      quizContainer.innerHTML=`<p>Question: -9 + 13</p>
-        <input id="mAns" type="number" placeholder="Answer">
-        <button onclick="checkM()">Submit</button>
-        <p id="mResult"></p>`;
+      out.innerHTML = '<span style="color:#00f5d4">🧪 Entering the Matrix... Numbers flowing everywhere!</span>';
+      
+      quizContainer.innerHTML = `
+        <div class="easter-egg-content">
+          <h3>Matrix Math Question</h3>
+          <p>Calculate: -9 + 13</p>
+          <input id="mAns" type="number" placeholder="Your answer">
+          <button onclick="checkM()">Submit</button>
+          <p id="mResult" style="margin-top:10px;"></p>
+        </div>
+      `;
+      
+      if (!unlockedEggs.has('303')) {
+        unlockedEggs.add('303');
+        eggCount++;
+        updateEggCounter();
+      }
       break;
-
-    case '505': // Flash + multiplication
-      sound.play(); out.innerHTML='⚡ Flash Burst!';
+      
+    case '404': // Glitch effect
+      unlockSound.play();
+      showUnlockNotification('🌀 Glitch Universe!', '🌀');
+      document.body.classList.add('glitch');
+      out.innerHTML = '<span style="color:#ff6b6b">🌀 Reality is glitching! Can you solve the math problem?</span>';
+      
+      setTimeout(() => document.body.classList.remove('glitch'), 7000);
+      
+      quizContainer.innerHTML = `
+        <div class="easter-egg-content" style="animation: glitchAnim 0.5s infinite;">
+          <h3>Glitched Math Problem</h3>
+          <p>What is 15 - 27?</p>
+          <input id="glitchAns" type="number" placeholder="Answer">
+          <button onclick="checkGlitch()">Submit</button>
+          <p id="glitchResult" style="margin-top:10px;"></p>
+        </div>
+      `;
+      
+      if (!unlockedEggs.has('404')) {
+        unlockedEggs.add('404');
+        eggCount++;
+        updateEggCounter();
+      }
+      break;
+      
+    case '505': // Flash burst
+      unlockSound.play();
+      showUnlockNotification('⚡ Flash Burst!', '⚡');
       document.body.classList.add('flash');
-      quizContainer.innerHTML=`<p>Question: (-5) × 6</p>
-        <input id="fAns" type="number" placeholder="Answer">
-        <button onclick="checkF()">Submit</button>
-        <p id="fResult"></p>`;
-      setTimeout(()=>document.body.classList.remove('flash'),4000);
+      out.innerHTML = '<span style="color:#ffd166">⚡ Everything just flashed bright! Quick math challenge!</span>';
+      
+      setTimeout(() => document.body.classList.remove('flash'), 2000);
+      
+      quizContainer.innerHTML = `
+        <div class="easter-egg-content">
+          <h3>Flash Math Challenge</h3>
+          <p>Solve: (-5) × 6</p>
+          <input id="fAns" type="number" placeholder="Answer">
+          <button onclick="checkF()">Submit</button>
+          <p id="fResult" style="margin-top:10px;"></p>
+        </div>
+      `;
+      
+      if (!unlockedEggs.has('505')) {
+        unlockedEggs.add('505');
+        eggCount++;
+        updateEggCounter();
+      }
       break;
-
-    case '707': // Combo: swirl + glitch short
-      sound.play(); out.innerHTML='🎯 Combo Mode!';
-      document.body.classList.add('neon-swirl','glitch');
-      setTimeout(()=>document.body.classList.remove('glitch'),4000);
-      setTimeout(()=>document.body.classList.remove('neon-swirl'),8000);
-      quizContainer.innerHTML=`<p>Question: -3 - 7</p>
-        <input id="cAns" type="number" placeholder="Answer">
-        <button onclick="checkC()">Submit</button>
-        <p id="cResult"></p>`;
+      
+    case '606': // Rainbow mode
+      unlockSound.play();
+      showUnlockNotification('🌈 Rainbow Mode!', '🌈');
+      document.body.classList.add('rainbow-mode');
+      out.innerHTML = '<span style="background:linear-gradient(90deg, #ff6b6b, #ffd166, #00f5d4, #9d4edd); -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-weight:bold;">🌈 Colors everywhere! Rainbow math time!</span>';
+      
+      quizContainer.innerHTML = `
+        <div class="easter-egg-content" style="background:linear-gradient(45deg, rgba(255,107,107,0.1), rgba(255,209,102,0.1), rgba(0,245,212,0.1), rgba(157,78,221,0.1));">
+          <h3 style="background:linear-gradient(90deg, #ff6b6b, #ffd166, #00f5d4, #9d4edd); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">Rainbow Math</h3>
+          <p>What is 24 ÷ (-3)?</p>
+          <input id="rainbowAns" type="number" placeholder="Answer">
+          <button onclick="checkRainbow()" style="background:linear-gradient(90deg, #ff6b6b, #ffd166, #00f5d4, #9d4edd);">Submit</button>
+          <p id="rainbowResult" style="margin-top:10px;"></p>
+        </div>
+      `;
+      
+      if (!unlockedEggs.has('606')) {
+        unlockedEggs.add('606');
+        eggCount++;
+        updateEggCounter();
+      }
       break;
-
+      
+    case '707': // Cyberpunk mode
+      unlockSound.play();
+      showUnlockNotification('🔮 Cyberpunk Mode!', '🔮');
+      document.body.classList.add('cyberpunk-mode');
+      out.innerHTML = '<span style="color:#ff00ff; text-shadow:0 0 10px #ff00ff;">🔮 Welcome to the cyber future! Neon lights and digital challenges await!</span>';
+      
+      quizContainer.innerHTML = `
+        <div class="easter-egg-content" style="background:rgba(10,10,10,0.8); border-color:#ff00ff;">
+          <h3 style="color:#ff00ff; text-shadow:0 0 10px #ff00ff;">CYBERPUNK CHALLENGE</h3>
+          <p style="color:#00ffff;">> Solve: -3 - 7</p>
+          <input id="cyberAns" type="number" placeholder="> Input" style="background:rgba(255,0,255,0.1); border-color:#ff00ff; color:#00ffff;">
+          <button onclick="checkCyber()" style="background:#ff00ff; color:#000; text-shadow:none;">> EXECUTE</button>
+          <p id="cyberResult" style="margin-top:10px; color:#00ffff;"></p>
+        </div>
+      `;
+      
+      if (!unlockedEggs.has('707')) {
+        unlockedEggs.add('707');
+        eggCount++;
+        updateEggCounter();
+      }
+      break;
+      
+    case '808': // Combo: swirl + matrix
+      unlockSound.play();
+      showUnlockNotification('🎯 Ultimate Combo Mode!', '🎯');
+      document.body.classList.add('neon-swirl', 'matrix-rain');
+      out.innerHTML = '<span style="color:#00ffff; text-shadow:0 0 10px #00ffff;">🎯 DOUBLE EFFECT! Neon swirl + Matrix rain activated!</span>';
+      
+      quizContainer.innerHTML = `
+        <div class="easter-egg-content" style="background:rgba(0,245,212,0.1); border-color:#00ffff;">
+          <h3 style="color:#00ffff;">Ultimate Math Challenge</h3>
+          <p>Solve: (-8) × (-5)</p>
+          <input id="comboAns" type="number" placeholder="Answer">
+          <button onclick="checkCombo()" style="background:#00ffff; color:#000;">Submit</button>
+          <p id="comboResult" style="margin-top:10px;"></p>
+        </div>
+      `;
+      
+      if (!unlockedEggs.has('808')) {
+        unlockedEggs.add('808');
+        eggCount++;
+        updateEggCounter();
+      }
+      break;
+      
+    case '909': // Secret final egg
+      unlockSound.play();
+      showUnlockNotification('🏆 SECRET FINAL EGG UNLOCKED!', '🏆');
+      document.body.classList.add('neon-swirl', 'flash');
+      setTimeout(() => {
+        document.body.classList.remove('flash');
+        document.body.classList.add('rainbow-mode');
+      }, 2000);
+      
+      out.innerHTML = '<span style="background:linear-gradient(90deg, gold, #ffd166, gold); -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-weight:bold; font-size:18px;">🏆 CONGRATULATIONS! You found the ultimate secret egg! 🏆</span>';
+      
+      quizContainer.innerHTML = `
+        <div class="easter-egg-content" style="background:linear-gradient(45deg, rgba(255,215,0,0.1), rgba(255,209,102,0.2), rgba(255,215,0,0.1)); border:2px solid gold;">
+          <h3 style="color:gold; text-shadow:0 0 10px gold;">🏆 FINAL CHALLENGE 🏆</h3>
+          <p>Master Level: (-12) × (-4) ÷ (-3)</p>
+          <input id="finalAns" type="number" placeholder="Your answer">
+          <button onclick="checkFinal()" style="background:gold; color:#000; font-weight:bold;">SUBMIT FINAL ANSWER</button>
+          <p id="finalResult" style="margin-top:10px; font-weight:bold;"></p>
+          <p style="margin-top:15px; color:#ffd166;">You've unlocked all ${eggCount+1}/9 Easter Eggs! Amazing!</p>
+        </div>
+      `;
+      
+      if (!unlockedEggs.has('909')) {
+        unlockedEggs.add('909');
+        eggCount++;
+        updateEggCounter();
+      }
+      break;
+      
     default:
-      out.innerHTML='❌ Invalid code';
+      out.innerHTML = '<span style="color:#ff6b6b">❌ Invalid code. Try 101, 202, 303, 404, 505, 606, 707, 808, or 909</span>';
   }
 }
 
 // Quiz checkers
-function checkNeon(){ const ans=document.getElementById('neonAns').value; document.getElementById('neonResult').innerHTML=(parseInt(ans)===56)?'✅ Correct!':'❌ Try again!';}
-function checkHack(){ const ans=document.getElementById('hackAns').value; document.getElementById('hackResult').innerHTML=(parseInt(ans)===8)?'✅ Correct!':'❌ Try again!';}
-function checkGlitch(){ const ans=document.getElementById('glitchAns').value; document.getElementById('glitchResult').innerHTML=(parseInt(ans)===-12)?'✅ Correct!':'❌ Try again!';}
-function checkM(){ const ans=document.getElementById('mAns').value; document.getElementById('mResult').innerHTML=(parseInt(ans)===4)?'✅ Correct!':'❌ Try again!';}
-function checkF(){ const ans=document.getElementById('fAns').value; document.getElementById('fResult').innerHTML=(parseInt(ans)===-30)?'✅ Correct!':'❌ Try again!';}
-function checkC(){ const ans=document.getElementById('cAns').value; document.getElementById('cResult').innerHTML=(parseInt(ans)===-10)?'✅ Correct!':'❌ Try again!';}
+function checkNeon() { 
+  const ans = parseInt(document.getElementById('neonAns').value); 
+  const result = document.getElementById('neonResult');
+  if (ans === 56) {
+    result.innerHTML = '✅ Correct! 7 × 8 = 56';
+    result.style.color = '#00f5d4';
+    document.getElementById('correctSound').play();
+  } else {
+    result.innerHTML = '❌ Try again!';
+    result.style.color = '#ff6b6b';
+  }
+}
 
-// Mobile navigation toggler (single definition)
+function checkHack() { 
+  const ans = parseInt(document.getElementById('hackAns').value); 
+  const result = document.getElementById('hackResult');
+  if (ans === 8) {
+    result.innerHTML = '> SOLUTION VERIFIED: -12 + 20 = 8';
+    result.style.color = '#0f0';
+    document.getElementById('correctSound').play();
+  } else {
+    result.innerHTML = '> ERROR: Incorrect. Try again.';
+    result.style.color = '#ff6b6b';
+  }
+}
+
+function checkGlitch() { 
+  const ans = parseInt(document.getElementById('glitchAns').value); 
+  const result = document.getElementById('glitchResult');
+  if (ans === -12) {
+    result.innerHTML = '✅ Correct! 15 - 27 = -12';
+    result.style.color = '#00f5d4';
+    document.getElementById('correctSound').play();
+  } else {
+    result.innerHTML = '❌ Glitched answer! Try again.';
+    result.style.color = '#ff6b6b';
+  }
+}
+
+function checkM() { 
+  const ans = parseInt(document.getElementById('mAns').value); 
+  const result = document.getElementById('mResult');
+  if (ans === 4) {
+    result.innerHTML = '✅ Correct! -9 + 13 = 4';
+    result.style.color = '#00f5d4';
+    document.getElementById('correctSound').play();
+  } else {
+    result.innerHTML = '❌ Incorrect. Try again.';
+    result.style.color = '#ff6b6b';
+  }
+}
+
+function checkF() { 
+  const ans = parseInt(document.getElementById('fAns').value); 
+  const result = document.getElementById('fResult');
+  if (ans === -30) {
+    result.innerHTML = '✅ Correct! (-5) × 6 = -30';
+    result.style.color = '#00f5d4';
+    document.getElementById('correctSound').play();
+  } else {
+    result.innerHTML = '❌ Flash missed! Try again.';
+    result.style.color = '#ff6b6b';
+  }
+}
+
+function checkRainbow() { 
+  const ans = parseInt(document.getElementById('rainbowAns').value); 
+  const result = document.getElementById('rainbowResult');
+  if (ans === -8) {
+    result.innerHTML = '🌈 Correct! 24 ÷ (-3) = -8';
+    result.style.color = '#00f5d4';
+    document.getElementById('correctSound').play();
+  } else {
+    result.innerHTML = '❌ Not quite right. Try again.';
+    result.style.color = '#ff6b6b';
+  }
+}
+
+function checkCyber() { 
+  const ans = parseInt(document.getElementById('cyberAns').value); 
+  const result = document.getElementById('cyberResult');
+  if (ans === -10) {
+    result.innerHTML = '> CYBER SOLUTION ACCEPTED: -3 - 7 = -10';
+    result.style.color = '#00ffff';
+    document.getElementById('correctSound').play();
+  } else {
+    result.innerHTML = '> SYSTEM REJECTION: Incorrect.';
+    result.style.color = '#ff6b6b';
+  }
+}
+
+function checkCombo() { 
+  const ans = parseInt(document.getElementById('comboAns').value); 
+  const result = document.getElementById('comboResult');
+  if (ans === 40) {
+    result.innerHTML = '✅ Correct! (-8) × (-5) = 40';
+    result.style.color = '#00f5d4';
+    document.getElementById('correctSound').play();
+  } else {
+    result.innerHTML = '❌ Combo broken! Try again.';
+    result.style.color = '#ff6b6b';
+  }
+}
+
+function checkFinal() { 
+  const ans = parseInt(document.getElementById('finalAns').value); 
+  const result = document.getElementById('finalResult');
+  if (ans === 16) {
+    result.innerHTML = '🏆 PERFECT! (-12) × (-4) ÷ (-3) = 16';
+    result.style.color = 'gold';
+    document.getElementById('correctSound').play();
+  } else {
+    result.innerHTML = '❌ So close! Remember: (-12)×(-4)=48, 48÷(-3)=16';
+    result.style.color = '#ff6b6b';
+  }
+}
+
+// Mobile navigation
 function toggleNav() {
   const nav = document.querySelector('nav');
   const main = document.querySelector('main');
@@ -544,7 +1323,15 @@ document.addEventListener('click', function(e) {
   }
 });
 
-// Optional one-time reload logic removed for smoother UX
+// Initialize
+createParticles();
+
+// Make Enter key work for Easter egg input
+document.getElementById('eggInput').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') {
+    checkEgg();
+  }
+});
 </script>
 </body>
 </html>
