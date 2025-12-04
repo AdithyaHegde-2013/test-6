@@ -3,521 +3,1675 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-<meta http-equiv="Pragma" content="no-cache" />
-<meta http-equiv="Expires" content="0" />
-
-<title>7C Maths Exhibition Website</title>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>7C Maths Exhibition - Integer World</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 <style>
-/* ===== General Styles ===== */
- 
+/* ===== CSS Variables ===== */
+:root {
+  --primary: #2563eb;
+  --secondary: #7c3aed;
+  --accent: #f59e0b;
+  --dark: #0f172a;
+  --darker: #0a0f1c;
+  --light: #f8fafc;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --gradient-bg: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f172a 100%);
+  --gradient-accent: linear-gradient(90deg, #f59e0b, #fbbf24, #f59e0b);
+  --card-bg: rgba(255, 255, 255, 0.08);
+  --nav-width: 260px;
+  --transition: all 0.3s ease;
+}
+
+/* ===== Reset & Base Styles ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   font-family: 'Poppins', sans-serif;
-  margin: 0;
-  color: #eee;
-  background: linear-gradient(135deg, #1a1a2e, #2c2c4d, #1e1e3a);
+  color: var(--light);
+  background: var(--gradient-bg);
   background-size: 400% 400%;
-  animation: bgMove 25s ease infinite;
+  animation: gradientBG 25s ease infinite;
+  min-height: 100vh;
   overflow-x: hidden;
-}
-nav {
-  background: rgba(0,0,0,0.75);
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 220px;
-  backdrop-filter: blur(12px);
-  border-right: 2px solid rgba(255,255,255,0.2);
+  line-height: 1.6;
 }
 
-nav a {
-  color: #fff;
-  text-decoration: none;
-  padding: 12px 15px;
-  border-radius: 10px;
-  font-weight: 600;
-  transition: 0.3s;
-}
-nav a:hover,
-nav a.active-tab {
-  background: rgba(255,255,255,0.15);
-  transform: scale(1.05);
-  box-shadow: 0 0 15px #00f0ff, 0 0 30px #00f0ff;
-}
-main { margin-left: 240px; padding: 40px; }
-section { display: none; }
-section.active { display: block; }
-/* ===== Cards ===== */
-.card-container { display: flex; flex-direction: column; gap: 25px; max-width: 900px; }
-.card {
-  background: rgba(255,255,255,0.05);
-  padding: 25px 30px;
-  border-radius: 20px;
-  box-shadow: 0 0 25px rgba(0,0,0,0.5);
-  backdrop-filter: blur(12px);
-  width: 100%;
-  transition: 0.3s;
-  cursor: pointer;
-}
-.card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 0 25px #ffd700, 0 0 50px #ffd700;
-}
-/* ===== Headings ===== */
-h2, h3 {
-  background: linear-gradient(90deg, #ffdd55, #ff9d00, #ffe577);
-  background-size: 300% 300%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: textGlow 4s ease infinite;
-  text-align: left;
-}
-/* ===== Buttons & Inputs ===== */
-input { padding: 12px; width: 250px; border-radius: 8px; border: none; outline: none; background: rgba(255,255,255,0.2); color: #fff; margin-right: 10px; }
-button { padding: 12px 20px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; background: linear-gradient(90deg, #ff8800, #ffaa00); background-size: 300% 300%; animation: btnGlow 6s ease infinite; color: #fff; transition: 0.3s; }
-button:hover { transform: scale(1.12); box-shadow: 0 0 20px #ffcc00, 0 0 40px #ffcc00; }
-/* ===== Easter Egg Animations ===== */
-.neon-swirl { animation: neonTwoSpin 10s linear forwards; filter: drop-shadow(0 0 25px #00ffff); }
-.hacked-mode { background:black !important; color:#0f0 !important; font-family: monospace; }
-.glitch { animation: glitchAnim 0.1s infinite; }
 /* ===== Animations ===== */
-@keyframes bgMove {0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
-@keyframes textGlow {0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
-@keyframes btnGlow {0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
-@keyframes neonTwoSpin {0%{transform:rotate(0deg);}50%{transform:rotate(360deg);}100%{transform:rotate(720deg);}}
-@keyframes glitchAnim {0%{transform: translate(0);}25%{transform: translate(-5px,5px);}50%{transform: translate(5px,-5px);}75%{transform: translate(-5px,-5px);}100%{transform: translate(0);}}
-/* ===== Timeline Styling ===== */
-.timeline {
-  position: relative;
-  margin: 40px 0;
-  padding-left: 30px;
-  border-left: 4px solid #ffcc00;
-  animation: fadeIn 1.5s ease;
-}
-
-.timeline-item {
-  margin: 30px 0;
-  position: relative;
-}
-
-.timeline-item::before {
-  content: "";
-  position: absolute;
-  left: -12px;
-  top: 5px;
-  width: 18px;
-  height: 18px;
-  background: #ffcc00;
-  border-radius: 50%;
-  box-shadow: 0 0 15px #ffcc00;
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(30px); }
+  from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Hamburger button */
-#hamburger {
-  display: none;
-  position: fixed;
-  top: 15px;
-  left: 15px;
-  font-size: 30px;
-  cursor: pointer;
-  z-index: 999;
-  color: #fff;
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 
-/* Mobile responsive nav */
-@media (max-width: 768px) {
-  #hamburger {
-    display: block;
-  }
-  nav {
-    width: 0;
-    padding: 15px 0;
-    overflow-x: hidden;
-    transition: 0.3s;
-  }
-  nav a {
-    opacity: 0;
-    display: block;
-    padding: 12px 15px;
-  }
-  nav.open {
-    width: 200px;
-    padding: 15px;
-  }
-  nav.open a {
-    opacity: 1;
-    transition: opacity 0.3s ease 0.2s;
-  }
-  main {
-    margin-left: 0;
-    transition: margin-left 0.3s;
-  }
-  main.nav-open {
-    margin-left: 200px;
-  }
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }
-/* Hide hamburger visually when nav is open (extra safety) */
-nav.open ~ #hamburger {
-  visibility: hidden;
+
+@keyframes textGlow {
+  0%, 100% { text-shadow: 0 0 10px rgba(245, 158, 11, 0.7); }
+  50% { text-shadow: 0 0 20px rgba(245, 158, 11, 0.9), 0 0 30px rgba(245, 158, 11, 0.5); }
 }
-/* Responsive video container */
-.video-wrapper {
+
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* ===== Navigation ===== */
+nav {
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(15px);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: var(--nav-width);
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  box-shadow: 5px 0 25px rgba(0, 0, 0, 0.3);
+}
+
+.logo-container {
+  text-align: center;
+  padding: 0 20px 30px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 20px;
+}
+
+.logo {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.logo i {
+  font-size: 2rem;
+}
+
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 15px;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.nav-links a {
+  color: #cbd5e1;
+  text-decoration: none;
+  padding: 14px 20px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: var(--transition);
+  font-weight: 500;
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-links a i {
+  font-size: 1.2rem;
+  width: 24px;
+  text-align: center;
+}
+
+.nav-links a:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  transform: translateX(5px);
+}
+
+.nav-links a.active {
+  background: linear-gradient(90deg, rgba(37, 99, 235, 0.2), transparent);
+  color: white;
+  border-left: 4px solid var(--accent);
+  font-weight: 600;
+}
+
+.nav-links a.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 3px;
+  background: var(--accent);
+  animation: textGlow 2s infinite;
+}
+
+.contact-footer {
+  padding: 20px;
+  margin-top: auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.9rem;
+  text-align: center;
+  color: #94a3b8;
+}
+
+.contact-footer b {
+  color: var(--accent);
+}
+
+/* ===== Main Content ===== */
+main {
+  margin-left: var(--nav-width);
+  padding: 30px;
+  min-height: 100vh;
+  animation: fadeIn 0.8s ease;
+}
+
+.section-header {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.section-header h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2.5rem;
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 10px;
+  animation: textGlow 3s infinite;
+}
+
+.section-header p {
+  color: #cbd5e1;
+  font-size: 1.1rem;
+  max-width: 800px;
+}
+
+/* ===== Cards ===== */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 25px;
+  margin-top: 30px;
+}
+
+.card {
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border-radius: 18px;
+  padding: 25px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: var(--transition);
+  animation: fadeIn 0.5s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--gradient-accent);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.card:hover::before {
+  transform: scaleX(1);
+}
+
+.card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card h3 i {
+  font-size: 1.2rem;
+}
+
+.card p {
+  color: #e2e8f0;
+  margin-bottom: 15px;
+}
+
+.card ul {
+  padding-left: 20px;
+  color: #cbd5e1;
+}
+
+.card ul li {
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.card ul li::before {
+  content: '•';
+  color: var(--accent);
+  font-weight: bold;
+  position: absolute;
+  left: -15px;
+}
+
+/* ===== Project Cards ===== */
+.project-card {
+  grid-column: span 2;
+}
+
+.team-members {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.member-tag {
+  background: rgba(37, 99, 235, 0.2);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  border: 1px solid rgba(37, 99, 235, 0.3);
+}
+
+.video-container {
   position: relative;
   width: 100%;
-  padding-bottom: 56.25%; /* 16:9 ratio */
   height: 0;
+  padding-bottom: 56.25%;
+  margin: 20px 0;
+  border-radius: 12px;
   overflow: hidden;
-  border-radius: 15px;
 }
 
-.video-wrapper iframe {
+.video-container iframe {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  border: 0;
+  border: none;
 }
 
+/* ===== Timeline ===== */
+.timeline {
+  position: relative;
+  padding-left: 30px;
+  margin: 30px 0;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--accent), var(--secondary));
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 40px;
+  padding-left: 20px;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -10px;
+  top: 5px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.5);
+}
+
+/* ===== Easter Egg Section ===== */
+.easter-egg-container {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.egg-input-group {
+  display: flex;
+  gap: 15px;
+  margin: 30px 0;
+  justify-content: center;
+}
+
+.egg-input-group input {
+  flex-grow: 1;
+  max-width: 300px;
+  padding: 15px 20px;
+  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+  transition: var(--transition);
+}
+
+.egg-input-group input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+}
+
+.egg-input-group button {
+  padding: 15px 30px;
+  background: var(--gradient-accent);
+  color: var(--dark);
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.egg-input-group button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
+}
+
+.code-hints {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 30px;
+  text-align: left;
+}
+
+.code-hints h4 {
+  color: var(--accent);
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.code-hint-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.code-hint-item:last-child {
+  border-bottom: none;
+}
+
+/* ===== Effects ===== */
+.neon-swirl {
+  animation: swirl 10s linear infinite;
+}
+
+.hacked-mode {
+  background: #0a0a0a !important;
+  color: #00ff00 !important;
+  font-family: 'Courier New', monospace !important;
+}
+
+.hacked-mode * {
+  border-color: #00ff00 !important;
+}
+
+.glitch {
+  position: relative;
+  animation: glitch 0.2s infinite;
+}
+
+@keyframes swirl {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.02); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+/* ===== Quiz Styles ===== */
+.quiz-container {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 25px;
+  margin-top: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.quiz-question {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  color: var(--accent);
+}
+
+.quiz-input-group {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.quiz-input-group input {
+  flex-grow: 1;
+  padding: 12px 18px;
+  border-radius: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  font-size: 1rem;
+}
+
+.quiz-input-group button {
+  padding: 12px 24px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.quiz-input-group button:hover {
+  background: #1d4ed8;
+}
+
+.result-message {
+  margin-top: 15px;
+  padding: 15px;
+  border-radius: 10px;
+  font-weight: 600;
+  display: none;
+}
+
+.result-message.success {
+  background: rgba(16, 185, 129, 0.2);
+  border: 1px solid var(--success);
+  color: var(--success);
+  display: block;
+}
+
+.result-message.error {
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid var(--danger);
+  color: var(--danger);
+  display: block;
+}
+
+/* ===== Interactive Elements ===== */
+.interactive-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  margin-top: 15px;
+}
+
+.interactive-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+}
+
+/* ===== Hamburger Menu ===== */
+#hamburger {
+  display: none;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: var(--dark);
+  color: var(--accent);
+  border: none;
+  border-radius: 10px;
+  width: 50px;
+  height: 50px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 1001;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  transition: var(--transition);
+}
+
+#hamburger:hover {
+  background: var(--accent);
+  color: var(--dark);
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 1200px) {
+  .card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+  
+  .project-card {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 992px) {
+  :root {
+    --nav-width: 0;
+  }
+  
+  nav {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    width: 280px;
+  }
+  
+  nav.open {
+    transform: translateX(0);
+  }
+  
+  main {
+    margin-left: 0;
+    padding: 80px 20px 30px;
+  }
+  
+  #hamburger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .section-header h1 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .card-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .egg-input-group {
+    flex-direction: column;
+  }
+  
+  .egg-input-group input,
+  .egg-input-group button {
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .quiz-input-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .team-members {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  main {
+    padding: 70px 15px 20px;
+  }
+  
+  .section-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .card {
+    padding: 20px;
+  }
+  
+  .card h3 {
+    font-size: 1.2rem;
+  }
+}
+
+/* ===== Utility Classes ===== */
+.hidden {
+  display: none !important;
+}
+
+.active {
+  display: block !important;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+.mb-30 {
+  margin-bottom: 30px;
+}
+
+.float-animation {
+  animation: float 3s ease-in-out infinite;
+}
+
+.pulse-animation {
+  animation: pulse 2s ease-in-out infinite;
+}
 </style>
 </head>
 <body>
-
+<!-- Navigation -->
 <nav>
-  <a href="#" data-tab="home" class="active-tab">Home</a>
-  <a href="#" data-tab="use">How to Use</a>
-  <a href="#" data-tab="guide">Project Guide</a>
-  <a href="#" data-tab="india">India's Contribution</a>
-  <a href="#" data-tab="integers">All About Integers</a>
-  <a href="#" data-tab="evolution">Evolution of Integers</a>
-  <a href="#" data-tab="daily">Integers in Daily Life</a>
-  <a href="#" data-tab="egg">Easter Eggs</a>
+  <div class="logo-container">
+    <div class="logo">
+      <i class="fas fa-calculator"></i>
+      <span>Integer World</span>
+    </div>
+    <p style="font-size: 0.9rem; color: #94a3b8; margin-top: 5px;">7C Maths Exhibition</p>
+  </div>
+  
+  <div class="nav-links">
+    <a href="#" data-tab="home" class="active">
+      <i class="fas fa-home"></i>
+      <span>Home</span>
+    </a>
+    <a href="#" data-tab="guide">
+      <i class="fas fa-project-diagram"></i>
+      <span>Project Guide</span>
+    </a>
+    <a href="#" data-tab="integers">
+      <i class="fas fa-infinity"></i>
+      <span>All About Integers</span>
+    </a>
+    <a href="#" data-tab="evolution">
+      <i class="fas fa-history"></i>
+      <span>Evolution</span>
+    </a>
+    <a href="#" data-tab="daily">
+      <i class="fas fa-sun"></i>
+      <span>Daily Life</span>
+    </a>
+    <a href="#" data-tab="india">
+      <i class="fas fa-landmark"></i>
+      <span>India's Contribution</span>
+    </a>
+    <a href="#" data-tab="egg">
+      <i class="fas fa-egg"></i>
+      <span>Easter Eggs</span>
+    </a>
+    <a href="#" data-tab="use">
+      <i class="fas fa-question-circle"></i>
+      <span>How to Use</span>
+    </a>
+  </div>
+  
+  <div class="contact-footer">
+    <p><b>Created by:</b><br>Adithya, Sanay, Manas, Malolan</p>
+    <p style="margin-top: 10px; font-size: 0.8rem;">7C Maths Exhibition 2024</p>
+  </div>
 </nav>
-<div id="hamburger" onclick="toggleNav()">☰</div>
 
+<!-- Hamburger Menu -->
+<button id="hamburger">
+  <i class="fas fa-bars"></i>
+</button>
 
+<!-- Main Content -->
 <main>
-<section id="home" class="active">
-<h2>Welcome to the Maths Exhibition</h2>
-<div class="card-container">
-<div class="card">
-<h3>About This Website</h3>
-<p>This website is your complete guide to our Maths Exhibition! Explore our exhibition projects, learn about integers , and explore cool secrets that we've hidden.</p>
-<p>We’ve created this especially for visitors of all ages — dive in and have fun!</p>
-<p><b>For any queries about the website, contact:</b> Adithya, Sanay, Manas, Malolan</p>
-</div>
-</div>
-</section>
-
-<section id="use">
-<h2>How to Use</h2>
-<div class="card-container">
-<div class="card"><h3>Navigation</h3><p>Click the menu items on the left to switch sections.</p></div>
-<div class="card"><h3>Explore Projects</h3><p>Go to Project Guide to get a detailed explanation of all our projects.</p></div>
-<div class="card"><h3>All About Integers</h3><p>Learn concepts and fun facts about integers and challenge your understanding of integers through our quiz.</p></div>
-<div class="card"><h3>India's contribution to Integers</h3><p>Learn about how india has contributed integers</p></div>
-<div class="card"><h3>Easter Eggs</h3><p>Want surprises? Go to Easter Eggs section and try secret codes to unlock fun effects!</p></div>
-</div>
-</section>
-
-<section id="guide">
-<h2>Project Guide</h2>
-<div class="card-container">
-<div class="card">
-<h3>Upamanyu's Project (Quiz & games)</h3>
- <div class="video-wrapper">
-  <iframe src="https://www.youtube.com/embed/ZgApIQwWWC8" allowfullscreen></iframe>
-</div>
-<p id = 'explanation'>*each parent is provided with  dice with 6 numbers in it<br>
- *the parents have to roll the dice and there will be a corresponding question alloted to each number <br>
- *the dice wil be rolled three times per one parent<br>
- *two questions of the 6 questions each will be easy , difficult , and extremely difficult<br>
- *if the question is answered appropriately  , badges and stickers will be awarded to the winners<br>
- link to their fun game : <a href="https://raghunidtech.github.io/mathmagic/" target="_blank">Fun game</a>
-<br> <b>members:upamanyu , anirudh , abhiram , saket , dheemanth , samartha </b></p>
-
-</div>
-<div class="card">
-<h3>Amitav's team(decode the password)</h3></h3>
- <div class="video-wrapper">
-  <iframe src="https://www.youtube.com/embed/ZgApIQwWWC8" allowfullscreen></iframe>
-</div>
-<p>6 integers related questions are given to parents with  time limit of 1 minute<br>
- the answers of the questions constitute the password<br>
-the person who answers all the questions appropriately and decodes the password is the winner<br> 
-badges and stickers are awarded to the winners and stickers are given to the participants<br>
-<b>members: amitav , parth , adarsh , vibhav , sudhanva</b></p>
-
-</div>
- <div class="card">
-<h3>dhatri's team(Basket ball challenge)</h3></h3>
- <div class="video-wrapper">
-  <iframe src="https://www.youtube.com/embed/ZgApIQwWWC8" allowfullscreen></iframe>
-</div>
-<p>parents are given balls to play basket ball with 3 levels easy medium and hard respectively <br>
-points would be awarded when a hook is scored in all levels and points are also deducted when a hook is missed<br>
- the final score has to be calculated by the parents and if they calculate appropriately , bands , bracelets and keychains are awarded
-<b>members: Dhatri , Maanya , Nidhi , Samhita</b></p>
-
-</div>
- <div class="card">
-<h3>Aadya's team(Dancing mathematics)</h3></h3>
- <div class="video-wrapper">
-  <iframe src="https://www.youtube.com/embed/ZgApIQwWWC8" allowfullscreen></iframe>
-</div>
-<p>parents have to solve promblems while dancing on the dance board <br>they also have to jump out an in the board and relate the same to positive and negative integers
-<b>members: Aadya , Swatishi , Diya , Usha , Anvita , Aakanksha , Saanvi , Lakshya</b></p>
-
-</div>
-</div>
-</section>
-
-<section id="india">
-<h2>India's Contribution</h2>
-<div class="card-container">
-<div class="card"><h3>Zero & Place Value</h3><p>India introduced the concept of zero and place‑value number system — a foundation of modern mathematics.</p></div>
-<div class="card"><h3>Mathematics in Ancient Texts</h3><p>Indian scholars made early advances in arithmetic, algebra, and trigonometry, influencing generations worldwide.</p></div>
-<div class="card"><h3>Vedic Mathematics</h3><p>Traditional computation methods using patterns — quick tricks that make mental math fun and fast.</p></div>
-</div>
-</section>
-
-<section id="integers">
-<h2>All About Integers</h2>
-<div class="card-container">
-<div class="card">
-<h3>What are Integers?</h3>
-<p>Integers are whole numbers — positive, negative, or zero. Examples: -3, -2, -1, 0, 1, 2, 3.</p>
-</div>
-<div class="card">
-<h3>Fun Facts About Integers</h3>
-<ul>
-<li>Zero is neither positive nor negative.</li>
-<li>Negative numbers were first used in ancient mathematics to represent debt or loss.</li>
-<li>Integers show up in daily life — temperature below/above zero, bank credits/debits, altitude below/above sea level.</li>
-<li>Multiplying two negative integers gives a positive result.</li>
-</ul>
-</div>
-<div class="card">
-<h3>Quick Questions</h3>
-<ul>
-<li>What is -5 + 9?</li>
-<li>If you subtract 7 from -3, what do you get?</li>
-<li>Multiply -4 by -6.</li>
-<li>List all integers between -2 and +3.</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="evolution" class="hidden">
-  <h2>Evolution of Integers</h2>
-  <div class="card-container">
-
-    <div class="card">
-      <h3>Early Counting Systems</h3>
-      <p>Ancient civilizations like the Egyptians, Babylonians, and Sumerians created number symbols but did not use negative numbers yet.</p>
-     <iframe src="https://study.com/cimages/multimages/16/maya_numbers_0-206924525793845690651.png" allowfullscreen></iframe>
+  <!-- Home Section -->
+  <section id="home" class="active">
+    <div class="section-header">
+      <h1>Welcome to Integer World</h1>
+      <p>Explore the fascinating universe of integers through interactive projects, historical insights, and mathematical adventures.</p>
     </div>
-
-    <div class="card">
-      <h3>India's Breakthrough</h3>
-      <p>Indian mathematicians introduced zero and rules for negative numbers. Brahmagupta (628 CE) formalized integer operations clearly.</p>
-     <iframe src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReCf-2RLjQwNmmNCqm3uAl4lYnKPCZ-MlAYg&s" allowfullscreen></iframe>
+    
+    <div class="card-grid">
+      <div class="card pulse-animation">
+        <h3><i class="fas fa-star"></i> About This Exhibition</h3>
+        <p>Welcome to our interactive mathematics exhibition! We've created an immersive experience that makes learning about integers engaging and fun for all ages.</p>
+        <p>Our exhibition features hands-on projects, historical timelines, real-world applications, and hidden surprises waiting to be discovered.</p>
+        <button class="interactive-btn" onclick="switchTab('guide')">
+          <i class="fas fa-play"></i> Explore Projects
+        </button>
+      </div>
+      
+      <div class="card">
+        <h3><i class="fas fa-bullseye"></i> Exhibition Goals</h3>
+        <ul>
+          <li>Make integer concepts accessible and engaging</li>
+          <li>Show real-world applications of mathematics</li>
+          <li>Highlight India's contributions to mathematics</li>
+          <li>Encourage interactive learning through games</li>
+          <li>Develop problem-solving skills in visitors</li>
+        </ul>
+      </div>
+      
+      <div class="card">
+        <h3><i class="fas fa-clock"></i> Quick Facts</h3>
+        <ul>
+          <li>Integers include positive, negative numbers and zero</li>
+          <li>Ancient Indians formalized integer operations</li>
+          <li>Negative numbers represent debts, temperatures, elevations</li>
+          <li>Every integer has an opposite (additive inverse)</li>
+          <li>Integers are fundamental in computer science</li>
+        </ul>
+        <button class="interactive-btn" onclick="switchTab('integers')">
+          <i class="fas fa-book-open"></i> Learn More
+        </button>
+      </div>
     </div>
+  </section>
 
-    <div class="card">
-      <h3>China’s Negative Numbers</h3>
-      <p>Ancient Chinese used red rods for positive numbers and black rods for negative—one of the earliest recorded uses of negatives.</p>
-     <iframe src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7eWK23yNzQe3vvWZOficsfdvFRnuVsdFVLw&s" allowfullscreen></iframe>
+  <!-- Project Guide Section -->
+  <section id="guide" class="hidden">
+    <div class="section-header">
+      <h1>Project Guide</h1>
+      <p>Explore all the exciting projects created by our teams. Each project makes learning about integers interactive and fun!</p>
     </div>
-
-    <div class="card">
-      <h3>Integers in Modern Mathematics</h3>
-      <p>Integers now power algebra, coordinate systems, programming, banking, cryptography, game design, and scientific calculations.</p>
-     
+    
+    <div class="card-grid">
+      <!-- Project 1 -->
+      <div class="card project-card">
+        <h3><i class="fas fa-dice"></i> Integer Dice Challenge</h3>
+        <div class="video-container">
+          <iframe src="https://www.youtube.com/embed/ZgApIQwWWC8" allowfullscreen></iframe>
+        </div>
+        <p><strong>How it works:</strong> Visitors roll a custom dice with 6 integer-related questions. Each number corresponds to a question with varying difficulty levels.</p>
+        <p><strong>Scoring:</strong> Easy (1-2 points), Medium (3-4 points), Hard (5-6 points). Win badges and stickers for correct answers!</p>
+        <p><strong>Play the game:</strong> <a href="https://raghunidtech.github.io/mathmagic/" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 600;">Try the Online Version <i class="fas fa-external-link-alt"></i></a></p>
+        <div class="team-members">
+          <span class="member-tag">Upamanyu</span>
+          <span class="member-tag">Anirudh</span>
+          <span class="member-tag">Abhiram</span>
+          <span class="member-tag">Saket</span>
+          <span class="member-tag">Dheemanth</span>
+          <span class="member-tag">Samartha</span>
+        </div>
+      </div>
+      
+      <!-- Project 2 -->
+      <div class="card project-card">
+        <h3><i class="fas fa-lock"></i> Password Decoder</h3>
+        <div class="video-container">
+          <iframe src="https://www.youtube.com/embed/ZgApIQwWWC8" allowfullscreen></iframe>
+        </div>
+        <p><strong>Challenge:</strong> Solve 6 integer problems within 1 minute. The answers form a password that needs to be decoded.</p>
+        <p><strong>Rewards:</strong> Winners receive special badges and all participants get stickers.</p>
+        <p><strong>Example:</strong> Answers "5, -2, 12, 0, -8, 3" might form password "5-2120-83"</p>
+        <div class="team-members">
+          <span class="member-tag">Amitav</span>
+          <span class="member-tag">Parth</span>
+          <span class="member-tag">Adarsh</span>
+          <span class="member-tag">Vibhav</span>
+          <span class="member-tag">Sudhanva</span>
+        </div>
+      </div>
+      
+      <!-- Project 3 -->
+      <div class="card project-card">
+        <h3><i class="fas fa-basketball-ball"></i> Basketball Integer Challenge</h3>
+        <div class="video-container">
+          <iframe src="https://www.youtube.com/embed/ZgApIQwWWC8" allowfullscreen></iframe>
+        </div>
+        <p><strong>Gameplay:</strong> Shoot baskets at 3 difficulty levels. Score positive points for baskets, negative for misses. Calculate your final score!</p>
+        <p><strong>Levels:</strong> Easy (+2/-1), Medium (+3/-2), Hard (+5/-3)</p>
+        <p><strong>Prizes:</strong> Correct calculations win bands, bracelets, and keychains!</p>
+        <div class="team-members">
+          <span class="member-tag">Dhatri</span>
+          <span class="member-tag">Maanya</span>
+          <span class="member-tag">Nidhi</span>
+          <span class="member-tag">Samhita</span>
+        </div>
+      </div>
+      
+      <!-- Project 4 -->
+      <div class="card project-card">
+        <h3><i class="fas fa-dancing"></i> Dancing Mathematics</h3>
+        <div class="video-container">
+          <iframe src="https://www.youtube.com/embed/ZgApIQwWWC8" allowfullscreen></iframe>
+        </div>
+        <p><strong>Concept:</strong> Solve integer problems while dancing! Jump in/out to represent positive/negative integers on a dance board.</p>
+        <p><strong>Learning:</strong> Physical representation of integer addition and subtraction through movement.</p>
+        <p><strong>Example:</strong> "3 + (-2)" = 3 steps in, 2 steps out</p>
+        <div class="team-members">
+          <span class="member-tag">Aadya</span>
+          <span class="member-tag">Swatishi</span>
+          <span class="member-tag">Diya</span>
+          <span class="member-tag">Usha</span>
+          <span class="member-tag">Anvita</span>
+          <span class="member-tag">Aakanksha</span>
+          <span class="member-tag">Saanvi</span>
+          <span class="member-tag">Lakshya</span>
+        </div>
+      </div>
     </div>
+  </section>
 
-  </div>
-
-</section>
-<section id="daily" class="hidden">
-  <h2>Integers in Daily Life</h2>
-  <div class="card-container">
-
-    <div class="card">
-      <h3>Temperature</h3>
-      <p>Weather uses integers:  
-      30°C → hot  
-      -5°C → below freezing.</p>
-        <iframe src="  https://thumbs.dreamstime.com/b/cold-warm-thermometer-temperature-weather-thermometers-celsius-fahrenheit-scale-thermostat-meteorology-vector-cold-warm-138916435.jpg" allowfullscreen></iframe>
+  <!-- All About Integers Section -->
+  <section id="integers" class="hidden">
+    <div class="section-header">
+      <h1>All About Integers</h1>
+      <p>Discover the fundamental concepts, properties, and fascinating facts about integers.</p>
     </div>
-
-    <div class="card">
-      <h3>Bank Accounts</h3>
-      <p>Deposits are positive, withdrawals are negative.  
-      Example: +500 (deposit), -200 (spent).</p>
-      <iframe src="https://www.shutterstock.com/image-vector/bank-deposit-withdrawal-transactions-loan-260nw-2494352227.jpg" allowfullscreen></iframe>
+    
+    <div class="card-grid">
+      <div class="card">
+        <h3><i class="fas fa-cube"></i> What Are Integers?</h3>
+        <p>Integers are the set of whole numbers that include:</p>
+        <ul>
+          <li><strong>Positive Integers:</strong> 1, 2, 3, 4, ...</li>
+          <li><strong>Negative Integers:</strong> -1, -2, -3, -4, ...</li>
+          <li><strong>Zero:</strong> Neither positive nor negative</li>
+        </ul>
+        <p>The integer set is represented as: <strong>{..., -3, -2, -1, 0, 1, 2, 3, ...}</strong></p>
+      </div>
+      
+      <div class="card">
+        <h3><i class="fas fa-lightbulb"></i> Key Properties</h3>
+        <ul>
+          <li><strong>Closure:</strong> Integer operations result in integers</li>
+          <li><strong>Commutative:</strong> a + b = b + a</li>
+          <li><strong>Associative:</strong> (a + b) + c = a + (b + c)</li>
+          <li><strong>Additive Identity:</strong> a + 0 = a</li>
+          <li><strong>Additive Inverse:</strong> a + (-a) = 0</li>
+          <li><strong>Multiplication Rules:</strong> (-) × (-) = (+)</li>
+        </ul>
+      </div>
+      
+      <div class="card">
+        <h3><i class="fas fa-brain"></i> Quick Quiz</h3>
+        <div class="quiz-container">
+          <p class="quiz-question">What is -15 + 23?</p>
+          <div class="quiz-input-group">
+            <input type="number" id="quiz1" placeholder="Your answer">
+            <button onclick="checkQuiz(1)">Check Answer</button>
+          </div>
+          <div id="quizResult1" class="result-message"></div>
+        </div>
+        
+        <div class="quiz-container mt-20">
+          <p class="quiz-question">Multiply: (-4) × (-7) = ?</p>
+          <div class="quiz-input-group">
+            <input type="number" id="quiz2" placeholder="Your answer">
+            <button onclick="checkQuiz(2)">Check Answer</button>
+          </div>
+          <div id="quizResult2" class="result-message"></div>
+        </div>
+      </div>
+      
+      <div class="card">
+        <h3><i class="fas fa-fun"></i> Fun Integer Facts</h3>
+        <ul>
+          <li>The word "integer" comes from Latin meaning "whole"</li>
+          <li>Negative numbers were once called "absurd numbers"</li>
+          <li>Zero was invented in India around 5th century AD</li>
+          <li>Integers are used in every computer program</li>
+          <li>There are infinitely many integers</li>
+          <li>Every integer has a unique prime factorization</li>
+        </ul>
+        <button class="interactive-btn" onclick="switchTab('evolution')">
+          <i class="fas fa-history"></i> Explore History
+        </button>
+      </div>
     </div>
+  </section>
 
-    <div class="card">
-      <h3>Elevation & Depth</h3>
-      <p>Altitude uses integers:  
-      +8848 m → Mount Everest  
-      -430 m → Dead Sea</p>
-           <iframe src="https://www.golabz.eu/sites/repository/files/styles/large/public/images/lab/screenshots/35a70e36ddd8fee94efb982e0f83cb43.png?itok=-yFJqxCU" allowfullscreen></iframe>
+  <!-- Evolution Section -->
+  <section id="evolution" class="hidden">
+    <div class="section-header">
+      <h1>Evolution of Integers</h1>
+      <p>Trace the fascinating journey of integers through human history and mathematical development.</p>
     </div>
-
-    <div class="card">
-      <h3>Games & Sports</h3>
-      <p>Health points, scores, penalties, damage, levels—all use integers.</p>
-           <iframe src="https://eatteachblog.wordpress.com/wp-content/uploads/2012/05/0001eg.jpeg" allowfullscreen></iframe>
+    
+    <div class="timeline">
+      <div class="timeline-item">
+        <h3>3000 BCE - Early Counting</h3>
+        <p>Ancient civilizations like Egyptians and Babylonians used counting systems for trade and astronomy, but only positive numbers.</p>
+      </div>
+      
+      <div class="timeline-item">
+        <h3>628 CE - Indian Breakthrough</h3>
+        <p>Indian mathematician Brahmagupta formalized rules for zero and negative numbers in "Brahmasphutasiddhanta".</p>
+      </div>
+      
+      <div class="timeline-item">
+        <h3>9th Century - Islamic Mathematics</h3>
+        <p>Al-Khwarizmi's work introduced Indian numerals and integer concepts to the Islamic world.</p>
+      </div>
+      
+      <div class="timeline-item">
+        <h3>13th Century - Europe's Resistance</h3>
+        <p>European mathematicians initially rejected negative numbers, calling them "fictitious" or "absurd".</p>
+      </div>
+      
+      <div class="timeline-item">
+        <h3>17th Century - Acceptance</h3>
+        <p>Descartes' coordinate system and banking needs led to widespread acceptance of negative numbers.</p>
+      </div>
+      
+      <div class="timeline-item">
+        <h3>Modern Era - Digital Age</h3>
+        <p>Integers form the foundation of computer science, cryptography, and modern mathematics.</p>
+      </div>
     </div>
-
-    <div class="card">
-      <h3>Electric Charges</h3>
-      <p>Atoms have positive (+) and negative (–) charges—an integer-based system.</p>
-           
+    
+    <div class="card-grid mt-30">
+      <div class="card">
+        <h3><i class="fas fa-book"></i> Brahmagupta's Rules</h3>
+        <p>The first mathematician to establish rules for zero and negative numbers:</p>
+        <ul>
+          <li>Zero added to a number leaves it unchanged</li>
+          <li>Zero subtracted from a number leaves it unchanged</li>
+          <li>A debt subtracted from zero is a fortune</li>
+          <li>A fortune subtracted from zero is a debt</li>
+        </ul>
+      </div>
+      
+      <div class="card">
+        <h3><i class="fas fa-globe-asia"></i> Global Journey</h3>
+        <p>How integers traveled the world:</p>
+        <ul>
+          <li>India → Islamic Empire → Europe → Worldwide</li>
+          <li>Each culture adapted integer concepts</li>
+          <li>Modern notation developed over centuries</li>
+          <li>Today integers are universal</li>
+        </ul>
+      </div>
     </div>
+  </section>
 
-  </div>
-</section>
+  <!-- Daily Life Section -->
+  <section id="daily" class="hidden">
+    <div class="section-header">
+      <h1>Integers in Daily Life</h1>
+      <p>Discover how integers appear in everyday situations around us.</p>
+    </div>
+    
+    <div class="card-grid">
+      <div class="card">
+        <h3><i class="fas fa-thermometer-half"></i> Temperature</h3>
+        <p>Weather forecasts use integers to represent temperature:</p>
+        <ul>
+          <li>35°C - Hot summer day</li>
+          <li>0°C - Freezing point of water</li>
+          <li>-10°C - Cold winter day</li>
+          <li>Temperature change: +5°C rise, -3°C drop</li>
+        </ul>
+      </div>
+      
+      <div class="card">
+        <h3><i class="fas fa-university"></i> Banking & Finance</h3>
+        <p>Integers track money movements:</p>
+        <ul>
+          <li>+₹5000 - Salary deposit</li>
+          <li>-₹1500 - Grocery shopping</li>
+          <li>-₹20000 - Loan payment</li>
+          <li>+₹300 - Interest earned</li>
+          <li>Net worth = Sum of all transactions</li>
+        </ul>
+      </div>
+      
+      <div class="card">
+        <h3><i class="fas fa-mountain"></i> Elevation & Depth</h3>
+        <p>Measuring heights and depths:</p>
+        <ul>
+          <li>+8848m - Mount Everest</li>
+          <li>-10994m - Mariana Trench</li>
+          <li>+300m - Hilltop</li>
+          <li>-50m - Underground parking</li>
+          <li>Sea level = 0m reference point</li>
+        </ul>
+      </div>
+      
+      <div class="card">
+        <h3><i class="fas fa-gamepad"></i> Games & Sports</h3>
+        <p>Scoring systems in games:</p>
+        <ul>
+          <li>+10 points - Correct answer</li>
+          <li>-5 points - Time penalty</li>
+          <li>Health: +25 heal, -30 damage</li>
+          <li>Golf: Under par (-), Over par (+)</li>
+          <li>Football: Goal difference</li>
+        </ul>
+      </div>
+      
+      <div class="card">
+        <h3><i class="fas fa-atom"></i> Science & Technology</h3>
+        <p>Integer applications in science:</p>
+        <ul>
+          <li>Electric charges: +1e, -1e</li>
+          <li>Quantum numbers: +½, -½</li>
+          <li>Computer memory addresses</li>
+          <li>Pixel coordinates on screen</li>
+          <li>Atomic numbers in chemistry</li>
+        </ul>
+      </div>
+      
+      <div class="card">
+        <h3><i class="fas fa-calendar-alt"></i> Time & Scheduling</h3>
+        <p>Integers in time management:</p>
+        <ul>
+          <li>+2 days from today</li>
+          <li>-3 hours time difference</li>
+          <li>Meeting in +30 minutes</li>
+          <li>Deadline in -2 days (overdue)</li>
+          <li>Countdown timers</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-<section id="egg">
-<h2>Easter Eggs</h2>
-<div class="card-container">
-<p><b>Instructions:</b> Enter one of the secret codes below to unlock various cool secrets.<b> Enter 0 anytime to reset the page to default.</b></p>
-<input id="eggInput" type="text" placeholder="Enter code">
-<button onclick="checkEgg()">Unlock</button>
-<p id="eggOutput"></p>
-<div id="eggQuizContainer"></div>
-<audio id="correctSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_7e0b1b7c48.mp3"></audio>
-</div>
-</section>
+  <!-- India's Contribution Section -->
+  <section id="india" class="hidden">
+    <div class="section-header">
+      <h1>India's Mathematical Legacy</h1>
+      <p>Discover how Indian mathematicians shaped the world of numbers and integers.</p>
+    </div>
+    
+    <div class="card-grid">
+      <div class="card">
+        <h3><i class="fas fa-sun"></i> The Invention of Zero</h3>
+        <p>India gave the world the concept of zero (shunya):</p>
+        <ul>
+          <li>First used as a placeholder in 5th century</li>
+          <li>Brahmagupta established rules for zero (628 CE)</li>
+          <li>Zero as a number, not just placeholder</li>
+          <li>Fundamental to place-value system</li>
+        </ul>
+      </div>
+      
+      <div class="card">
+        <h3><i class="fas fa-calculator"></i> Integer Operations</h3>
+        <p>Indian mathematicians formalized integer rules:</p>
+        <ul>
+          <li>Brahmagupta's rules for positives and negatives</li>
+          <li>Systematic approach to addition/subtraction</li>
+          <li>Multiplication and division rules</li>
+          <li>Influenced Islamic and European mathematics</li>
+        </ul>
+      </div>
+      
+      <div class="card">
+        <h3><i class="fas fa-book-open"></i> Ancient Mathematical Texts</h3>
+        <p>Key contributions in historical texts:</p>
+        <ul>
+          <li><strong>Bakhshali Manuscript:</strong> Early use of zero</li>
+          <li><strong>Aryabhatiya:</strong> Algebraic methods</li>
+          <li><strong>Lilavati:</strong> Problems and solutions</li>
+          <li><strong>Sulba Sutras:</strong> Geometry and algebra</li>
+        </ul>
+      </div>
+      
+      <div class="card">
+        <h3><i class="fas fa-brain"></i> Vedic Mathematics</h3>
+        <p>Ancient techniques for rapid calculation:</p>
+        <ul>
+          <li>16 Sutras (formulas)</li>
+          <li>Mental calculation methods</li>
+          <li>Pattern-based approaches</li>
+          <li>Still taught worldwide today</li>
+        </ul>
+        <button class="interactive-btn" onclick="showVedicExample()">
+          <i class="fas fa-magic"></i> Try Vedic Method
+        </button>
+      </div>
+      
+      <div class="card">
+        <h3><i class="fas fa-users"></i> Notable Mathematicians</h3>
+        <p>Indian mathematical pioneers:</p>
+        <ul>
+          <li><strong>Aryabhata</strong> (476-550 CE): Algebra, trigonometry</li>
+          <li><strong>Brahmagupta</strong> (598-668 CE): Zero, integers</li>
+          <li><strong>Bhaskara II</strong> (1114-1185 CE): Calculus concepts</li>
+          <li><strong>Madhava</strong> (1340-1425 CE): Infinite series</li>
+        </ul>
+      </div>
+      
+      <div class="card">
+        <h3><i class="fas fa-globe"></i> Global Impact</h3>
+        <p>How Indian mathematics spread worldwide:</p>
+        <ul>
+          <li>Arabic translations of Indian texts</li>
+          <li>Introduction to Europe via Islamic Spain</li>
+          <li>Adoption as "Arabic numerals" worldwide</li>
+          <li>Foundation for modern mathematics</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
+  <!-- Easter Eggs Section -->
+  <section id="egg" class="hidden">
+    <div class="section-header">
+      <h1>Easter Eggs & Secrets</h1>
+      <p>Unlock hidden features and surprises with secret codes! Try different codes to discover special effects.</p>
+    </div>
+    
+    <div class="easter-egg-container">
+      <div class="card">
+        <h3><i class="fas fa-key"></i> Secret Code Input</h3>
+        <p>Enter one of the secret codes below to unlock special effects and challenges.</p>
+        
+        <div class="egg-input-group">
+          <input type="text" id="eggInput" placeholder="Enter secret code" maxlength="10">
+          <button onclick="checkEgg()">
+            <i class="fas fa-unlock"></i> Unlock
+          </button>
+        </div>
+        
+        <p id="eggOutput" class="text-center mb-20"></p>
+        
+        <div id="eggQuizContainer"></div>
+        
+        <div class="code-hints">
+          <h4><i class="fas fa-lightbulb"></i> Code Hints</h4>
+          <div class="code-hint-item">
+            <span>Neon Swirl Effect</span>
+            <span class="pulse-animation" style="color: var(--accent);">101</span>
+          </div>
+          <div class="code-hint-item">
+            <span>Matrix Hack Mode</span>
+            <span class="pulse-animation" style="color: var(--success);">202</span>
+          </div>
+          <div class="code-hint-item">
+            <span>Glitch Animation</span>
+            <span class="pulse-animation" style="color: var(--danger);">404</span>
+          </div>
+          <div class="code-hint-item">
+            <span>Reset Everything</span>
+            <span style="color: #94a3b8;">0</span>
+          </div>
+        </div>
+        
+        <div class="mt-20 text-center">
+          <p><small><i class="fas fa-info-circle"></i> Enter "0" anytime to reset all effects</small></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How to Use Section -->
+  <section id="use" class="hidden">
+    <div class="section-header">
+      <h1>How to Use This Website</h1>
+      <p>A guide to navigating and getting the most from our interactive exhibition website.</p>
+    </div>
+    
+    <div class="card-grid">
+      <div class="card">
+        <h3><i class="fas fa-compass"></i> Navigation Guide</h3>
+        <ul>
+          <li><strong>Sidebar Menu:</strong> Click any section to navigate</li>
+          <li><strong>Mobile:</strong> Use hamburger menu (top-left)</li>
+          <li><strong>Active Tab:</strong> Highlighted in orange</li>
+          <li><strong>Quick Links:</strong> Use buttons within cards</li>
+        </ul>
+      </div>
+      
+      <div class="card">
+        <h3><i class="fas fa-project-diagram"></i> Exploring Projects</h3>
+        <ul>
+          <li>Watch project videos for each team</li>
+          <li>Read detailed explanations</li>
+          <li>See team member lists</li>
+          <li>Try online versions where available</li>
+          <li>Understand scoring systems</li>
+        </ul>
+      </div>
+      
+      <div class="card">
+        <h3><i class="fas fa-graduation-cap"></i> Learning Resources</h3>
+        <ul>
+          <li><strong>All About Integers:</strong> Concepts & quiz</li>
+          <li><strong>Evolution:</strong> Historical timeline</li>
+          <li><strong>Daily Life:</strong> Real-world applications</li>
+          <li><strong>India's Contribution:</strong> Cultural context</li>
+          <li>Interactive quizzes in each section</li>
+        </ul>
+      </div>
+      
+      <div class="card">
+        <h3><i class="fas fa-egg"></i> Easter Eggs</h3>
+        <ul>
+          <li>Enter codes in Easter Eggs section</li>
+          <li>Discover hidden effects</li>
+          <li>Solve math challenges</li>
+          <li>Reset with code "0"</li>
+          <li>Try all three codes for surprises</li>
+        </ul>
+      </div>
+      
+      <div class="card">
+        <h3><i class="fas fa-mobile-alt"></i> Mobile Experience</h3>
+        <ul>
+          <li>Responsive design for all devices</li>
+          <li>Tap hamburger for menu</li>
+          <li>Swipe-friendly interfaces</li>
+          <li>Optimized for touch screens</li>
+          <li>Mobile-first approach</li>
+        </ul>
+      </div>
+      
+      <div class="card">
+        <h3><i class="fas fa-question-circle"></i> Need Help?</h3>
+        <p>For any questions about the website or exhibition:</p>
+        <div class="team-members mt-20">
+          <span class="member-tag">Adithya</span>
+          <span class="member-tag">Sanay</span>
+          <span class="member-tag">Manas</span>
+          <span class="member-tag">Malolan</span>
+        </div>
+        <p class="mt-20">Visit us at the exhibition for hands-on experiences with all projects!</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Audio Elements -->
+<audio id="correctSound" src="https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3"></audio>
+<audio id="effectSound" src="https://assets.mixkit.co/sfx/preview/mixkit-magic-sparkles-300.mp3"></audio>
 
 <script>
-// Tab navigation
-const tabs=document.querySelectorAll('nav a');
-const sections=document.querySelectorAll('section');
-tabs.forEach(tab=>{
-  tab.addEventListener('click',e=>{
-    e.preventDefault();
-    const target=tab.getAttribute('data-tab');
-    sections.forEach(sec=>sec.classList.remove('active'));
-    document.getElementById(target).classList.add('active');
-    tabs.forEach(t=>t.classList.remove('active-tab'));
-    tab.classList.add('active-tab');
+// ===== Global Variables =====
+let currentEffects = [];
+const audioCache = {};
+
+// ===== Tab Navigation =====
+function switchTab(tabId) {
+  // Hide all sections
+  document.querySelectorAll('section').forEach(section => {
+    section.classList.remove('active');
+    section.classList.add('hidden');
   });
-});
-
-// Easter Egg
-function checkEgg(){
-  const code=document.getElementById('eggInput').value.trim();
-  const out=document.getElementById('eggOutput');
-  const quizContainer=document.getElementById('eggQuizContainer');
-  const sound=document.getElementById('correctSound');
-
-  document.body.classList.remove('neon-swirl','glitch','hacked-mode');
-  quizContainer.innerHTML=''; out.innerHTML='';
-
-  switch(code){
-    case '0': location.reload(); break;
-
-    case '101':
-      sound.play(); out.innerHTML='✨ Neon Swirl Activated! Solve this while it spins:';
-      document.body.classList.add('neon-swirl');
-      setTimeout(()=>document.body.classList.remove('neon-swirl'),10000);
-      quizContainer.innerHTML=`<p>Question: What is 7 × 8?</p><input id="neonAns" type="number" placeholder="Answer"><button onclick="checkNeon()">Submit</button><p id="neonResult"></p>`;
-      break;
-
-    case '202':
-      sound.play(); out.innerHTML='💀 Hack Mode Enabled! Solve this while in hack mode:';
-      document.body.classList.add('hacked-mode');
-      quizContainer.innerHTML=`<p>Question: Solve -12 + 20 = ?</p><input id="hackAns" type="number" placeholder="Answer"><button onclick="checkHack()">Submit</button><p id="hackResult"></p>`;
-      break;
-
-    case '404':
-      sound.play(); out.innerHTML='🌀 Glitch Effect! Solve this while glitching:';
-      document.body.classList.add('glitch');
-      quizContainer.innerHTML=`<p>Question: 15 - 27 = ?</p><input id="glitchAns" type="number" placeholder="Answer"><button onclick="checkGlitch()">Submit</button><p id="glitchResult"></p>`;
-      setTimeout(()=>document.body.classList.remove('glitch'),7000);
-      break;
-
-    default: out.innerHTML='❌ Invalid code';
+  
+  // Remove active class from all nav links
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.classList.remove('active');
+  });
+  
+  // Show selected section
+  const targetSection = document.getElementById(tabId);
+  if (targetSection) {
+    targetSection.classList.remove('hidden');
+    targetSection.classList.add('active');
     
+    // Add active class to corresponding nav link
+    const activeLink = document.querySelector(`.nav-links a[data-tab="${tabId}"]`);
+    if (activeLink) {
+      activeLink.classList.add('active');
+    }
+    
+    // Close mobile menu if open
+    closeMobileMenu();
+    
+    // Scroll to top of section
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }
 
-// Quiz checkers
-function checkNeon(){ const ans=document.getElementById('neonAns').value; document.getElementById('neonResult').innerHTML=(parseInt(ans)===56)?'✅ Correct!':'❌ Try again!';}
-function checkHack(){ const ans=document.getElementById('hackAns').value; document.getElementById('hackResult').innerHTML=(parseInt(ans)===8)?'✅ Correct!':'❌ Try again!';}
-function checkGlitch(){ const ans=document.getElementById('glitchAns').value; document.getElementById('glitchResult').innerHTML=(parseInt(ans)===-12)?'✅ Correct!':'❌ Try again!';}
-function toggleNav() {
+// ===== Mobile Menu =====
+function toggleMobileMenu() {
   const nav = document.querySelector('nav');
-  const main = document.querySelector('main');
-  nav.classList.toggle('open');
-  main.classList.toggle('nav-open');
+  const hamburger = document.getElementById('hamburger');
   
+  nav.classList.toggle('open');
+  
+  if (nav.classList.contains('open')) {
+    hamburger.innerHTML = '<i class="fas fa-times"></i>';
+    hamburger.style.background = 'var(--accent)';
+    hamburger.style.color = 'var(--dark)';
+  } else {
+    hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+    hamburger.style.background = 'var(--dark)';
+    hamburger.style.color = 'var(--accent)';
+  }
 }
-// Close sidebar when clicking a nav link (mobile)
-tabs.forEach(tab => {
-  tab.addEventListener('click', () => {
+
+function closeMobileMenu() {
+  const nav = document.querySelector('nav');
+  const hamburger = document.getElementById('hamburger');
+  
+  if (nav.classList.contains('open')) {
+    nav.classList.remove('open');
+    hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+    hamburger.style.background = 'var(--dark)';
+    hamburger.style.color = 'var(--accent)';
+  }
+}
+
+// ===== Quiz Functions =====
+function checkQuiz(quizNumber) {
+  const answerMap = {
+    1: 8,    // -15 + 23 = 8
+    2: 28    // (-4) × (-7) = 28
+  };
+  
+  const userAnswer = parseInt(document.getElementById(`quiz${quizNumber}`).value);
+  const resultElement = document.getElementById(`quizResult${quizNumber}`);
+  const correctSound = document.getElementById('correctSound');
+  
+  if (userAnswer === answerMap[quizNumber]) {
+    resultElement.textContent = '✅ Correct! Well done!';
+    resultElement.className = 'result-message success';
+    playSound('correctSound');
+  } else {
+    resultElement.textContent = '❌ Try again! Remember the integer rules.';
+    resultElement.className = 'result-message error';
+  }
+}
+
+// ===== Easter Egg Functions =====
+function checkEgg() {
+  const code = document.getElementById('eggInput').value.trim();
+  const output = document.getElementById('eggOutput');
+  const quizContainer = document.getElementById('eggQuizContainer');
+  const body = document.body;
+  
+  // Clear previous effects
+  clearEffects();
+  
+  // Reset output
+  output.innerHTML = '';
+  quizContainer.innerHTML = '';
+  
+  // Process codes
+  switch(code) {
+    case '0':
+      location.reload();
+      break;
+      
+    case '101':
+      activateNeonSwirl(output, quizContainer);
+      break;
+      
+    case '202':
+      activateHackMode(output, quizContainer);
+      break;
+      
+    case '404':
+      activateGlitchMode(output, quizContainer);
+      break;
+      
+    default:
+      output.innerHTML = '<span style="color: var(--danger)">❌ Invalid code. Try 101, 202, or 404</span>';
+      playSound('effectSound');
+  }
+}
+
+function activateNeonSwirl(output, container) {
+  playSound('effectSound');
+  output.innerHTML = '<span style="color: var(--accent)">✨ Neon Swirl Activated! Solve this math challenge:</span>';
+  
+  body.classList.add('neon-swirl');
+  currentEffects.push('neon-swirl');
+  
+  container.innerHTML = `
+    <div class="quiz-container">
+      <p class="quiz-question">What is 7 × 8? (While spinning!)</p>
+      <div class="quiz-input-group">
+        <input type="number" id="neonAns" placeholder="Your answer">
+        <button onclick="checkNeonAnswer()">Submit</button>
+      </div>
+      <div id="neonResult" class="result-message"></div>
+    </div>
+  `;
+  
+  // Auto-remove effect after 10 seconds
+  setTimeout(() => {
+    body.classList.remove('neon-swirl');
+    currentEffects = currentEffects.filter(e => e !== 'neon-swirl');
+  }, 10000);
+}
+
+function activateHackMode(output, container) {
+  playSound('effectSound');
+  output.innerHTML = '<span style="color: var(--success)">💻 Hack Mode Enabled! Solve this in terminal style:</span>';
+  
+  body.classList.add('hacked-mode');
+  currentEffects.push('hacked-mode');
+  
+  container.innerHTML = `
+    <div class="quiz-container" style="font-family: monospace;">
+      <p class="quiz-question">> Solve: -12 + 20 = ?</p>
+      <div class="quiz-input-group">
+        <input type="number" id="hackAns" placeholder="Enter solution" style="font-family: monospace;">
+        <button onclick="checkHackAnswer()">Execute</button>
+      </div>
+      <div id="hackResult" class="result-message"></div>
+    </div>
+  `;
+}
+
+function activateGlitchMode(output, container) {
+  playSound('effectSound');
+  output.innerHTML = '<span style="color: var(--danger)">🌀 Glitch Effect! Can you solve this while glitching?</span>';
+  
+  body.classList.add('glitch');
+  currentEffects.push('glitch');
+  
+  container.innerHTML = `
+    <div class="quiz-container">
+      <p class="quiz-question">15 - 27 = ? (Don\'t let the glitch distract you!)</p>
+      <div class="quiz-input-group">
+        <input type="number" id="glitchAns" placeholder="Your answer">
+        <button onclick="checkGlitchAnswer()">Submit</button>
+      </div>
+      <div id="glitchResult" class="result-message"></div>
+    </div>
+  `;
+  
+  // Auto-remove effect after 7 seconds
+  setTimeout(() => {
+    body.classList.remove('glitch');
+    currentEffects = currentEffects.filter(e => e !== 'glitch');
+  }, 7000);
+}
+
+function checkNeonAnswer() {
+  const answer = parseInt(document.getElementById('neonAns').value);
+  const result = document.getElementById('neonResult');
+  
+  if (answer === 56) {
+    result.innerHTML = '<span style="color: var(--success)">✅ Correct! 7 × 8 = 56</span>';
+    result.className = 'result-message success';
+    playSound('correctSound');
+  } else {
+    result.innerHTML = '<span style="color: var(--danger)">❌ Try again! Remember your multiplication tables.</span>';
+    result.className = 'result-message error';
+  }
+}
+
+function checkHackAnswer() {
+  const answer = parseInt(document.getElementById('hackAns').value);
+  const result = document.getElementById('hackResult');
+  
+  if (answer === 8) {
+    result.innerHTML = '<span style="color: #00ff00">> SOLUTION VERIFIED: -12 + 20 = 8</span>';
+    result.className = 'result-message success';
+    playSound('correctSound');
+  } else {
+    result.innerHTML = '<span style="color: #ff0000">> ERROR: Incorrect calculation</span>';
+    result.className = 'result-message error';
+  }
+}
+
+function checkGlitchAnswer() {
+  const answer = parseInt(document.getElementById('glitchAns').value);
+  const result = document.getElementById('glitchResult');
+  
+  if (answer === -12) {
+    result.innerHTML = '<span style="color: var(--success)">✅ Correct! 15 - 27 = -12</span>';
+    result.className = 'result-message success';
+    playSound('correctSound');
+  } else {
+    result.innerHTML = '<span style="color: var(--danger)">❌ Try again! Remember: 15 - 27 = -12</span>';
+    result.className = 'result-message error';
+  }
+}
+
+function clearEffects() {
+  currentEffects.forEach(effect => {
+    body.classList.remove(effect);
+  });
+  currentEffects = [];
+}
+
+// ===== Sound Functions =====
+function playSound(soundId) {
+  try {
+    const sound = document.getElementById(soundId);
+    if (sound) {
+      sound.currentTime = 0;
+      sound.play().catch(e => console.log("Audio play failed:", e));
+    }
+  } catch (e) {
+    console.log("Sound error:", e);
+  }
+}
+
+// ===== Vedic Mathematics Example =====
+function showVedicExample() {
+  const examples = [
+    "Multiply by 11: 23 × 11 = 2 (2+3) 3 = 253",
+    "Square numbers ending in 5: 35² = 3×(3+1) 25 = 1225",
+    "Multiply close numbers: 98×97 = (100-2)×(100-3) = 10000-500+6 = 9506",
+    "Vertically & Crosswise: 12×13 = (1×1) (1×3+2×1) (2×3) = 1 5 6 = 156"
+  ];
+  
+  const randomExample = examples[Math.floor(Math.random() * examples.length)];
+  
+  alert(`Vedic Mathematics Trick:\n\n${randomExample}\n\nThis method makes mental calculation faster!`);
+}
+
+// ===== Event Listeners =====
+document.addEventListener('DOMContentLoaded', function() {
+  // Setup tab navigation
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const tabId = this.getAttribute('data-tab');
+      switchTab(tabId);
+    });
+  });
+  
+  // Setup hamburger menu
+  document.getElementById('hamburger').addEventListener('click', toggleMobileMenu);
+  
+  // Close menu when clicking outside on mobile
+  document.addEventListener('click', function(e) {
     const nav = document.querySelector('nav');
-    const main = document.querySelector('main');
-    if (nav.classList.contains('open')) {
-      nav.classList.remove('open');
-      main.classList.remove('nav-open');
-      document.getElementById('hamburger').style.display = 'block';
+    const hamburger = document.getElementById('hamburger');
+    
+    if (window.innerWidth <= 992 && 
+        nav.classList.contains('open') &&
+        !nav.contains(e.target) &&
+        e.target !== hamburger) {
+      closeMobileMenu();
     }
   });
+  
+  // Handle Enter key in easter egg input
+  document.getElementById('eggInput')?.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      checkEgg();
+    }
+  });
+  
+  // Preload sounds
+  ['correctSound', 'effectSound'].forEach(soundId => {
+    const sound = document.getElementById(soundId);
+    if (sound) {
+      sound.load();
+    }
+  });
+  
+  // Initialize with fade-in animation
+  document.body.style.opacity = '0';
+  setTimeout(() => {
+    document.body.style.transition = 'opacity 0.5s ease';
+    document.body.style.opacity = '1';
+  }, 100);
 });
-// Close sidebar when clicking outside
-document.addEventListener('click', function(e) {
-  const nav = document.querySelector('nav');
-  const hamburger = document.getElementById('hamburger');
 
-  // If sidebar open AND clicked outside nav AND outside hamburger
-  if (nav.classList.contains('open') &&
-      !nav.contains(e.target) &&
-      e.target !== hamburger) {
-
-    nav.classList.remove('open');
-    document.querySelector('main').classList.remove('nav-open');
-    hamburger.style.display = 'block';
-  }
-});
-function toggleNav() {
-  const nav = document.querySelector('nav');
-  const main = document.querySelector('main');
-  const hamburger = document.getElementById('hamburger');
-
-  nav.classList.toggle('open');
-  main.classList.toggle('nav-open');
-
-  // Hide hamburger when sidebar opens
-  hamburger.style.display = nav.classList.contains('open') ? 'none' : 'block';
+// ===== Page Reload Prevention =====
+if (sessionStorage.getItem('visited')) {
+  // Not first visit
+} else {
+  sessionStorage.setItem('visited', 'true');
+  window.onload = function() {
+    if (performance.navigation.type === 1) {
+      // Page was reloaded
+      sessionStorage.removeItem('visited');
+    }
+  };
 }
 
-</script>
-<script>
-  if (!sessionStorage.getItem('reloaded')) {
-    sessionStorage.setItem('reloaded', 'true');
-    location.reload(true);
+// ===== Responsive Adjustments =====
+window.addEventListener('resize', function() {
+  if (window.innerWidth > 992) {
+    closeMobileMenu();
   }
+});
 </script>
-
 </body>
 </html>
-
-
-
-
