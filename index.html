@@ -1314,8 +1314,8 @@ function checkCombo() {
 function checkFinal() { 
   const ans = parseInt(document.getElementById('finalAns').value); 
   const result = document.getElementById('finalResult');
-  if (ans === 16) {
-    result.innerHTML = '🏆 PERFECT! (-12) × (-4) ÷ (-3) = 16';
+  if (ans === -16) {
+    result.innerHTML = '🏆 PERFECT! (-12) × (-4) ÷ (-3) = -16';
     result.style.color = 'gold';
     document.getElementById('correctSound').play();
   } else {
@@ -1357,6 +1357,7 @@ document.getElementById('eggInput').addEventListener('keypress', function(e) {
 </script>
 </body>
 </html>
+
 
 
 
